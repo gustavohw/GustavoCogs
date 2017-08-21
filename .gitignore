@@ -3,6 +3,8 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+discord/
+
 # C extensions
 *.so
 
@@ -99,3 +101,4 @@ ENV/
 
 # mypy
 .mypy_cache/
+.idea/
