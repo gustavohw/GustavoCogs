@@ -1,4 +1,3 @@
-import os
 from discord.ext import commands
 
 class Quinta:
@@ -10,6 +9,8 @@ class Quinta:
         await self.bot.say("https://www.youtube.com/watch?v=OZpx3loLxg8")
 
 
-    def setup(bot):
-        n = Quinta(bot)
-        bot.add_cog(n)
+def setup(bot):
+    n = Quinta(bot)
+    bot.add_cog(n)
+
+    
