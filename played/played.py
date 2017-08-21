@@ -10,7 +10,7 @@ class Played:
                        "https://www.youtube.com/watch?v=OZpx3loLxg8"
 
     @commands.command(name="played")
-    def _cookie(self):
+    async def _cookie(self):
         time.sleep(5)
         return await self.bot.say(self.fortune)
 
