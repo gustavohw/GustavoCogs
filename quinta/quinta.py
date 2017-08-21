@@ -15,7 +15,7 @@ class Quinta:
         """Ask for your fortune
         And look deeply into my scales
         """
-        return await self.bot.say("`" + randchoice(self.fortune) + "`")
+        return await self.bot.say(randchoice(self.fortune))
 
 
 def setup(bot):
