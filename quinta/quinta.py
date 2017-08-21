@@ -7,7 +7,7 @@ class Quinta:
 
     def __init__(self, bot):
         self.bot = bot
-        self.fortune = ["https://www.youtube.com/watch?v=OZpx3loLxg8"]
+        self.fortune = "https://www.youtube.com/watch?v=OZpx3loLxg8"
 
     @commands.command(name="quinta")
     async def _cookie(self):
