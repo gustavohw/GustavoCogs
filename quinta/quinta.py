@@ -4,7 +4,7 @@ class Quinta:
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command (no_pm=True, name='quinta')
+    @commands.command (no_pm=True)
     async def quinta(self, *, text):
         await self.bot.say("https://www.youtube.com/watch?v=OZpx3loLxg8")
 
