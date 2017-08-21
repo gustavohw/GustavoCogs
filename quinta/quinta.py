@@ -11,6 +11,7 @@ class Quinta:
 
     @commands.command(name="quinta")
     async def _cookie(self):
+        time.sleep(5)
         return await self.bot.say(self.fortune)
 
 
