@@ -4,7 +4,6 @@ from discord.ext import commands
 from .utils.dataIO import fileIO
 import time
 
-client = discord.Client()
 
 class Played:
 
@@ -12,26 +11,33 @@ class Played:
         self.bot = bot
         self.data_file = 'data/played/played.json'
 
+    def match(self, a, b):
+        return SequenceMatcher(None, a, b).ratio()
 
+    def listener(self, before, after):
+        before_game = str(before.game)
+        try:
+            after_game = str(after.game)
+        except TypeError:
+            after_game = 'None'
+        server = after.server
 
-    asyncdef my_background_task():
-        await client.wait_until_ready()
-        counter = 0
-        channel = discord.Object(id='channel_id_here')
-        while not client.is_closed:
-            counter += 1
-            await client.send_message(channel, counter)
-            await asyncio.sleep(60)  # task runs every 60 seconds
+        """while True:"""
+            if not after.bot:
+                if after_game != 'None' and after_game != '':
+                    if before_game != after_game:
+                    data = fileIO(self.data_file, 'load')
+                    if server.id not in data:
+                        data[server.id] = {}
+                        data[server.id]['GAMES'] = {}
+                    game_match = ''
+                    for game in data[server.id]['GAMES']:
+                        if self.match(str(game).upper(), after_game.upper()) > 0.89 and self.match(str(game).upper(),after_game.upper()) < 1.0:
+                            game_match = game
+                    if game_match in data[server.id]['GAMES']:
+                        data[server.id]['GAMES'][game_match]['MINUTES'] += 1
 
-    @client.event
-    async def on_ready():
-        print('Logged in as')
-        print(client.user.name)
-        print(client.user.id)
-        print('------')
-
-    client.loop.create_task(my_background_task())
-    client.run('token')
+                    await asyncio.sleep(60)
 
 
 def check_folder():
