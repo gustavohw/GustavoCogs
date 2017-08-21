@@ -8,14 +8,27 @@ class Played:
 
     def __init__(self, bot):
         self.bot = bot
-        self.fortune = "CHEGAMOS NA QUINTA FEIRA, ÚLTIMO GÁS " \
-                       "https://www.youtube.com/watch?v=OZpx3loLxg8"
+        self.data_file = 'data/played/played.json'
 
     @commands.command(name="played")
     async def _cookie(self):
-        time.sleep(5)
-        return await self.bot.say(self.fortune)
+        time.sleep(1)
+        return await self.bot.say("teste")
 
+
+def check_folder():
+    if not os.path.exists('data/played'):
+        print('Creating data/played folder...')
+        os.makedirs('data/played')
+
+def check_file():
+    data = {}
+    f = 'data/played/played.json'
+    if not fileIO(f, 'check'):
+        print('Creating default played.json...')
+        fileIO(f, 'save', data)
 
 def setup(bot):
+    check_folder()
+    check_file()
     bot.add_cog(Played(bot))
