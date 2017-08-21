@@ -3,7 +3,7 @@ from discord.ext import commands
 from random import choice as randchoice
 
 
-class Fortune:
+class Quinta:
     """Fortune Cookie Commands."""
 
     def __init__(self, bot):
@@ -44,4 +44,4 @@ class Fortune:
 
 
 def setup(bot):
-    bot.add_cog(Fortune(bot))
+    bot.add_cog(Quinta(bot))
