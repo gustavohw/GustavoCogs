@@ -53,8 +53,8 @@ class Played:
                 if i > 10:
                     break
                 message+='{:<5}{:<10}\n'.format(i, game)"""
-            message += 'Counter-Strike: Global Offensive - 354h 20m \n'
-            message += 'Zbrush - 9784h 50m \n'
+            message += '1 - Zbrush - 9784h 50m \n'
+            message += '2 - Counter-Strike: Global Offensive - 354h 20m \n'
             message +='```'
             await self.bot.say(message)
 
