@@ -12,7 +12,7 @@ class Played:
     def match(self, a, b):
         return SequenceMatcher(None, a, b).ratio()
 
-    def listener(self, before, after):
+    async def listener(self, before, after):
         before_game = str(before.game)
         try:
             after_game = str(after.game)
