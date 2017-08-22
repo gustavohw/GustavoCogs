@@ -48,7 +48,7 @@ class Played:
         if server.id in data:
             data = data[server.id]['GAMES']
             games_played = sorted(data, key=lambda x: (data[x]['PLAYED']), reverse=True)
-            message = '```Most popular games played on {}\n\n'.format(server.name)
+            message = '```Playtime dos jogos mais jogados no {}\n\n'.format(server.name)
             for i, game in enumerate(games_played, 1):
                 if i > 10:
                     break
@@ -72,5 +72,5 @@ def setup(bot):
     check_folder()
     check_file()
     n = Played(bot)
-    bot.add_listener(n.listener, 'on_member_update')
+    """bot.add_listener(n.listener, 'on_member_update')"""
     bot.add_cog(n)
