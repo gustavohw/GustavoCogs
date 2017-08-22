@@ -28,32 +28,32 @@ class Played:
                         data[server.id]['GAMES'] = {}
                     game_match = ''
                     for game in data[server.id]['GAMES']:
-                        if self.match(str(game).upper(), after_game.upper()) > 0.89 and self.match(str(game).upper(),after_game.upper()) < 1.0:
+                        if self.match(str(game).upper(), after_game.upper()) > 0.89 and self.match(str(game).upper(), after_game.upper()) < 1.0:
                             game_match = game
                     if game_match in data[server.id]['GAMES']:
-                        data[server.id]['GAMES'][game_match]['MINUTES'] += 1
+                        data[server.id]['GAMES'][game_match]['PLAYED'] += 1
                     elif after_game not in data[server.id]['GAMES']:
                         data[server.id]['GAMES'][after_game] = {}
-                        data[server.id]['GAMES'][after_game]['MINUTES'] = 1
+                        data[server.id]['GAMES'][after_game]['PLAYED'] = 1
                         data[server.id]['GAMES'][after_game]['GAME'] = after_game
                     else:
-                        data[server.id]['GAMES'][after_game]['MINUTES'] += 1
+                        data[server.id]['GAMES'][after_game]['PLAYED'] += 1
                     fileIO(self.data_file, 'save', data)
 
     @commands.command(pass_context=True, no_pm=True, name='played')
-    async def _played(self, context):
+    async def _games(self, context):
         """Shows top 10 most popular games on this server."""
         server = context.message.server
         data = fileIO(self.data_file, 'load')
         if server.id in data:
             data = data[server.id]['GAMES']
-            games_played = sorted(data, key=lambda x: (data[x]['MINUTES']), reverse=True)
+            games_played = sorted(data, key=lambda x: (data[x]['PLAYED']), reverse=True)
             message = '```Most popular games played on {}\n\n'.format(server.name)
             for i, game in enumerate(games_played, 1):
                 if i > 10:
                     break
-                message += '{:<5}{:<10}\n'.format(i, game)
-            message += '```'
+                message +='{:<5}{:<10}\n'.format(i, game)
+            message +='```'
             await self.bot.say(message)
 
 def check_folder():
