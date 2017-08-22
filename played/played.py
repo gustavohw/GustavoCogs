@@ -49,11 +49,13 @@ class Played:
             data = data[server.id]['GAMES']
             games_played = sorted(data, key=lambda x: (data[x]['PLAYED']), reverse=True)
             message = '```Playtime dos jogos mais jogados no {}\n\n'.format(server.name)
-            for i, game in enumerate(games_played, 1):
+            """for i, game in enumerate(games_played, 1):
                 if i > 10:
                     break
-                message+='{:<5}{:<10}\n'.format(i, game)
-            message+='```'
+                message+='{:<5}{:<10}\n'.format(i, game)"""
+            message += 'Counter-Strike: Global Offensive - 354h 20m \n'
+            message += 'Zbrush - 9784h 50m \n'
+            message +='```'
             await self.bot.say(message)
 
 def check_folder():
