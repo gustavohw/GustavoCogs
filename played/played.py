@@ -60,21 +60,21 @@ class Played:
             message += '```'
             await self.bot.say(message)
 
-    def check_folder():
-        if not os.path.exists('data/played'):
-            print('Creating data/played folder...')
-            os.makedirs('data/played')
+def check_folder():
+    if not os.path.exists('data/played'):
+        print('Creating data/played folder...')
+        os.makedirs('data/played')
 
-    def check_file():
-        data = {}
-        f = 'data/played/played.json'
-        if not fileIO(f, 'check'):
-            print('Creating default played.json...')
-            fileIO(f, 'save', data)
+def check_file():
+    data = {}
+    f = 'data/played/played.json'
+    if not fileIO(f, 'check'):
+        print('Creating default played.json...')
+        fileIO(f, 'save', data)
 
-    def setup(bot):
-        check_folder()
-        check_file()
-        n = Played(bot)
-        bot.add_listener(n.listener, 'on_member_update')
-        bot.add_cog(n)
+def setup(bot):
+    check_folder()
+    check_file()
+    n = Played(bot)
+    bot.add_listener(n.listener, 'on_member_update')
+    bot.add_cog(n)
