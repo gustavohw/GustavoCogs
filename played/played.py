@@ -9,7 +9,7 @@ class Played:
         self.bot = bot
         self.data_file = 'data/played/played.json'
 
-    def match(a, b):
+    def match(self, a, b):
         return SequenceMatcher(None, a, b).ratio()
 
     def listener(self, before, after):
