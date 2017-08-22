@@ -3,7 +3,6 @@ from discord.ext import commands
 from .utils.dataIO import fileIO
 from difflib import SequenceMatcher
 
-
 class Played:
     def __init__(self, bot):
         self.bot = bot
@@ -12,7 +11,7 @@ class Played:
     def match(self, a, b):
         return SequenceMatcher(None, a, b).ratio()
 
-    async def listener(self, before, after):
+    def listener(self, before, after):
         before_game = str(before.game)
         try:
             after_game = str(after.game)
