@@ -12,7 +12,7 @@ class Played:
         self.bot = bot
         self.data_file = 'data/played/played.json'
 
-    def match(self, a, b):
+    def match(a, b):
         return SequenceMatcher(None, a, b).ratio()
 
     def listener(self, before, after):
@@ -44,7 +44,21 @@ class Played:
                     data[server.id]['GAMES'][after_game]['MINUTES'] += 1
                 fileIO(self.data_file, 'save', data)
 
-
+    @commands.command(pass_context=True, no_pm=True, name='played')
+    async def _games(self, context):
+        """Shows top 10 most popular games on this server."""
+        server = context.message.server
+        data = fileIO(self.data_file, 'load')
+        if server.id in data:
+            data = data[server.id]['GAMES']
+            games_played = sorted(data, key=lambda x: (data[x]['MINUTES']), reverse=True)
+            message = '```Most popular games played on {}\n\n'.format(server.name)
+            for i, game in enumerate(games_played, 1):
+                if i > 10:
+                    break
+                message += '{:<5}{:<10}\n'.format(i, game)
+            message += '```'
+            await self.bot.say(message)
 
     def check_folder():
         if not os.path.exists('data/played'):
@@ -61,4 +75,6 @@ class Played:
     def setup(bot):
         check_folder()
         check_file()
-        bot.add_cog(Played(bot))
+        n = Played(bot)
+        bot.add_listener(n.listener, 'on_member_update')
+        bot.add_cog(n)
