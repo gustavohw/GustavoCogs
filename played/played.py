@@ -28,7 +28,7 @@ class Played:
                         data[server.id]['GAMES'] = {}
                     game_match = ''
                     for game in data[server.id]['GAMES']:
-                        if self.match(str(game).upper(), after_game.upper()) > 0.89 and self.match(str(game).upper(), after_game.upper()) < 1.0:
+                        if 0.89 < self.match(str(game).upper(), after_game.upper()) < 1.0:
                             game_match = game
                     if game_match in data[server.id]['GAMES']:
                         data[server.id]['GAMES'][game_match]['PLAYED'] += 1
