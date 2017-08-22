@@ -1,76 +1,90 @@
-import os
+import discord
 from discord.ext import commands
-from .utils.dataIO import fileIO
-from difflib import SequenceMatcher
+import operator
 
-class Played:
+
+class WhoPlays:
     def __init__(self, bot):
         self.bot = bot
-        self.data_file = 'data/played/played.json'
 
-    def match(self, a, b):
-        return SequenceMatcher(None, a, b).ratio()
+    @commands.command(pass_context=True, no_pm=True)
+    async def whoplays(self, ctx, *, game):
+        """Shows a list of all the people playing a game."""
+        if len(game) <= 2:
+            await self.bot.say("You need at least 3 characters.")
+            return
 
-    def listener(self, before, after):
-        before_game = str(before.game)
-        try:
-            after_game = str(after.game)
-        except TypeError:
-            after_game = 'None'
-        server = after.server
+        user = ctx.message.author
+        server = ctx.message.server
+        members = server.members
 
-        if not after.bot:
-            if after_game != 'None' and after_game != '':
-                if before_game != after_game:
-                    data = fileIO(self.data_file, 'load')
-                    if server.id not in data:
-                        data[server.id] = {}
-                        data[server.id]['GAMES'] = {}
-                    game_match = ''
-                    for game in data[server.id]['GAMES']:
-                        if 0.89 < self.match(str(game).upper(), after_game.upper()) < 1.0:
-                            game_match = game
-                    if game_match in data[server.id]['GAMES']:
-                        data[server.id]['GAMES'][game_match]['PLAYED'] += 1
-                    elif after_game not in data[server.id]['GAMES']:
-                        data[server.id]['GAMES'][after_game] = {}
-                        data[server.id]['GAMES'][after_game]['PLAYED'] = 1
-                        data[server.id]['GAMES'][after_game]['GAME'] = after_game
-                    else:
-                        data[server.id]['GAMES'][after_game]['PLAYED'] += 1
-                    fileIO(self.data_file, 'save', data)
+        playing_game = ""
+        count_playing = 0
+        for member in members:
+            if not member:
+                continue
+            if not member.game or not member.game.name:
+                continue
+            if member.bot:
+                continue
+            if game.lower() in member.game.name.lower():
+                count_playing += 1
+                if count_playing <= 15:
+                    playing_game += "▸ {} ({})\n".format(member.name,
+                                                         member.game.name)
 
-    @commands.command(pass_context=True, no_pm=True, name='played')
-    async def _played(self, context):
-        """Shows top 10 most popular games on this server."""
-        server = context.message.server
-        data = fileIO(self.data_file, 'load')
-        if server.id in data:
-            data = data[server.id]['GAMES']
-            games_played = sorted(data, key=lambda x: (data[x]['PLAYED']), reverse=True)
-            message = '```Most popular games played on {}\n\n'.format(server.name)
-            for i, game in enumerate(games_played, 1):
-                if i > 10:
-                    break
-                message +='{:<5}{:<10}\n'.format(i, game)
-            message +='```'
-            await self.bot.say(message)
+        if playing_game == "":
+            await self.bot.say("No one is playing that game.")
+        else:
+            msg = playing_game
+            em = discord.Embed(description=msg, colour=user.colour)
+            if count_playing > 15:
+                showing = "(Showing 15/{})".format(count_playing)
+            else:
+                showing = "({})".format(count_playing)
+            text = "These are the people who are playing"
+            text += "{}:\n{}".format(game, showing)
+            em.set_author(name=text)
+            await self.bot.say(embed=em)
 
-def check_folder():
-    if not os.path.exists('data/played'):
-        print('Creating data/played folder...')
-        os.makedirs('data/played')
+    @commands.command(pass_context=True, no_pm=True)
+    async def cgames(self, ctx):
+        """Shows the currently most played games"""
+        user = ctx.message.author
+        server = ctx.message.server
+        members = server.members
 
-def check_file():
-    data = {}
-    f = 'data/played/played.json'
-    if not fileIO(f, 'check'):
-        print('Creating default played.json...')
-        fileIO(f, 'save', data)
+        freq_list = {}
+        for member in members:
+            if not member:
+                continue
+            if not member.game or not member.game.name:
+                continue
+            if member.bot:
+                continue
+            if member.game.name not in freq_list:
+                freq_list[member.game.name] = 0
+            freq_list[member.game.name] += 1
+
+        sorted_list = sorted(freq_list.items(),
+                             key=operator.itemgetter(1),
+                             reverse=True)
+
+        if not freq_list:
+            await self.bot.say("Surprisingly, no one is playing anything.")
+        else:
+            # create display
+            msg = ""
+            max_games = min(len(sorted_list), 10)
+            for i in range(max_games):
+                game, freq = sorted_list[i]
+                msg += "▸ {}: __{}__\n".format(game, freq_list[game])
+
+            em = discord.Embed(description=msg, colour=user.colour)
+            em.set_author(name="These are the server's most played games at the moment:")
+            await self.bot.say(embed=em)
+
 
 def setup(bot):
-    check_folder()
-    check_file()
-    n = Played(bot)
-    bot.add_listener(n.listener, 'on_member_update')
+    n = WhoPlays(bot)
     bot.add_cog(n)
