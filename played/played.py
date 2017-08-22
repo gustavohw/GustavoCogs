@@ -42,7 +42,7 @@ class Played:
                     fileIO(self.data_file, 'save', data)
 
     @commands.command(pass_context=True, no_pm=True, name='played')
-    async def _games(self, context):
+    async def _played(self, context):
         """Shows top 10 most popular games on this server."""
         server = context.message.server
         data = fileIO(self.data_file, 'load')
