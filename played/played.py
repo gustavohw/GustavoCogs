@@ -45,16 +45,17 @@ class Played:
     async def _played(self, context):
         """Shows playtime per game."""
         server = context.message.server
-        message = '```Jogos sendo jogados atualmente {}\n\n'.format(server.name)
-        for member in server.members:
-            if member.game is not None:
-                message += '**' + member.name + '**'
-                message += ' está jogando: '
-                message += member.game.name
-                message += '\n'
-
-        message += '```'
-        await self.bot.say(message)
+        data = fileIO(self.data_file, 'load')
+        if server.id in data:
+            data = data[server.id]['GAMES']
+            games_played = sorted(data, key=lambda x: (data[x]['MINUTES']), reverse=True)
+            message = '```Jogos mais jogados no servidor:  {}\n\n'.format(server.name)
+            for i, game in enumerate(games_played, 1):
+                if i > 10:
+                    break
+                message += '{:<5}{:<10}\n'.format(i, game)
+            message += '```'
+            await self.bot.say(message)
 
 
 def check_folder():
