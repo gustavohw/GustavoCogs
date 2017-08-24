@@ -52,7 +52,7 @@ class Played:
             for game in data:
                 msg = str(game)
                 msg += ' - Tempo total de jogo: '
-                msg += data[game]['MINUTES']
+                msg += str(data[game]['MINUTES'])
                 await self.bot.say(msg)
 
 
