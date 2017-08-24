@@ -54,7 +54,7 @@ class Played:
                 msg += ': '
                 time = (data[game]['MINUTES'])
                 if time > 60:
-                    hours = time/60
+                    hours = (int)time/60
                     minutes = time % 60
                     msg += str(hours)
                     msg += ' horas e '
