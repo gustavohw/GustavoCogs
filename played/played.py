@@ -50,7 +50,10 @@ class Played:
             #games_played = sorted(data, key=lambda x: (data[x]['MINUTES']), reverse=True)
 
             for game in data:
-                await self.bot.say(str(game))
+                msg = str(game)
+                msg += ' - Tempo total de jogo: '
+                msg += data['MINUTES']
+                await self.bot.say(msg)
 
 
             #games_played = sorted(data, key=lambda x: (data[x]['MINUTES']), reverse=True)
