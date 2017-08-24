@@ -24,7 +24,8 @@ class Played:
                 message += ' está jogando: '
                 message += member.game.name
 
-                await self.bot.say(message)
+        message += '```'
+        await self.bot.say(message)
 
 
 def check_folder():
