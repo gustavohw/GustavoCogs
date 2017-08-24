@@ -61,6 +61,7 @@ class Played:
                     msg += str(minutes)
                     msg += ' minutos.'
                 else:
+                    minutes = time
                     msg += str(minutes)
                     msg += ' minutos.'
                 await self.bot.say(msg)
