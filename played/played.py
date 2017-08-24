@@ -54,6 +54,8 @@ class Played:
 
                 if len(msg) < 31:
                     msg = gamestr.ljust(31 - len(gamestr))
+                else:
+                    msg = gamestr
 
                 msg += ': '
                 time = (data[game]['MINUTES'])
