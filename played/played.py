@@ -17,6 +17,7 @@ class Played:
         """Schedule this per 1 minute basis."""
         server = context.message.server
         data = fileIO(self.data_file, 'load')
+        after_game = ''
         for member in server.members:
             if member.game is not None:
                 after_game = str(member.game)
