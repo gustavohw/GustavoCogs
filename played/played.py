@@ -51,7 +51,7 @@ class Played:
             for i, game in enumerate(games_played, 1):
                 if i > 10:
                     break
-                message += '{:<5}{:<10}\n'.format(i, " - ", game)
+                message += '{:<5}{:<10}\n'.format(games_played, game)
             message += '```'
             await self.bot.say(message)
 
