@@ -17,8 +17,8 @@ class Played:
         """Shows top 10 most popular games on this server."""
         server = context.message.server
         for member in server.members:
-            yield await self.bot.say(member.game)
-
+            await self.bot.say(member.game)
+            yield member
 
 def check_folder():
     if not os.path.exists('data/played'):
