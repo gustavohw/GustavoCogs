@@ -48,10 +48,9 @@ class Played:
             data = data[server.id]['GAMES']
 
             #games_played = sorted(data, key=lambda x: (data[x]['MINUTES']), reverse=True)
-
+            finalMsg = '``` '
             for game in data:
-                msg = '``` '
-                msg += str(game)
+                msg = str(game)
                 msg += ' - Tempo total de jogo: '
                 time = (data[game]['MINUTES'])
                 if time > 60:
@@ -64,10 +63,15 @@ class Played:
                 else:
                     minutes = time
                     msg += str(minutes)
-                    msg += ' minutos.'
+                    if time is 1:
+                        msg += ' minuto.'
+                    else:
+                        msg += ' minutos.'
 
-                msg += ' ```'
-                await self.bot.say(msg)
+                msg += '\n'
+                finalMsg += msg
+            finalMsg += ' ```'
+            await self.bot.say(finalMsg)
 
 
             #games_played = sorted(data, key=lambda x: (data[x]['MINUTES']), reverse=True)
