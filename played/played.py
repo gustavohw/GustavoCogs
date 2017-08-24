@@ -50,11 +50,12 @@ class Played:
             finalMsg = '```Jogos mais jogados no servidor: {}\n\n'.format(server.name)
 
             for game in data:
-                msg = str(game)
-                msg += ': '
-                if len(msg) < 31:
-                    msg.ljust(len(msg) - 31)
+                gamestr = str(game)
 
+                if len(msg) < 31:
+                    msg = gamestr.ljust(31 - len(gamestr))
+
+                msg += ': '
                 time = (data[game]['MINUTES'])
                 if time > 60:
                     hours = int(time/60)
