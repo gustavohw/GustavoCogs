@@ -22,7 +22,7 @@ class Played:
 
                 message += member.display_name
                 message += ' está jogando: '
-                message += member.game
+                message += member.game.name
 
                 await self.bot.say(message)
 
