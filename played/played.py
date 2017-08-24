@@ -52,7 +52,7 @@ class Played:
             for game in data:
                 gamestr = str(game)
 
-                if len(msg) < 31:
+                if len(gamestr) < 31:
                     msg = gamestr.ljust(31 - len(gamestr))
                 else:
                     msg = gamestr
