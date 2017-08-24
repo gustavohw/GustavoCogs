@@ -16,11 +16,11 @@ class Played:
     async def _played(self, context):
         """Shows top 10 most popular games on this server."""
         server = context.message.server
-        message = '```Most popular games played on {}\n\n'.format(server.name)
+        message = '```Jogos sendo jogados atualmente {}\n\n'.format(server.name)
         for member in server.members:
             if member.game is not None:
 
-                message += member.display_name
+                message += '**' + member.name + '**'
                 message += ' está jogando: '
                 message += member.game.name
 
