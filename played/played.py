@@ -46,7 +46,11 @@ class Played:
         data = fileIO(self.data_file, 'load')
         if server.id in data:
             data = data[server.id]['GAMES']
-            games_played = sorted(data, key=lambda x: (data[x]['MINUTES']), reverse=True)
+
+            games_played = sorted(data, key=int, reverse=True)
+            await self.bot.say(games_played)
+
+            #games_played = sorted(data, key=lambda x: (data[x]['MINUTES']), reverse=True)
             message = '```Jogos mais jogados no servidor:  {}\n\n'.format(server.name)
             for i, game in enumerate(games_played, 1):
                 if i > 10:
