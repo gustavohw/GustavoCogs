@@ -47,7 +47,7 @@ class Played:
         if server.id in data:
             data = data[server.id]['GAMES']
 
-            games_played = sorted(data, key=int, reverse=True)
+            games_played = sorted(data, key=lambda x: (data[x]['MINUTES']), reverse=True)
             await self.bot.say(games_played)
 
             #games_played = sorted(data, key=lambda x: (data[x]['MINUTES']), reverse=True)
