@@ -17,24 +17,25 @@ class Played:
         server = context.message.server
         data = fileIO(self.data_file, 'load')
         for member in server.members:
-            if member.game is not None:
-                after_game = str(member.game)
+            if member.status is not member.status.idle:
+                if member.game is not None:
+                    after_game = str(member.game)
 
-                if server.id not in data:
-                    data[server.id] = {}
-                    data[server.id]['GAMES'] = {}
-                game_match = ''
-                for game in data[server.id]['GAMES']:
-                    if self.match(str(game).upper(), after_game.upper()) > 0.89 and self.match(str(game).upper(),after_game.upper()) < 1.0:
-                        game_match = game
-                if game_match in data[server.id]['GAMES']:
-                    data[server.id]['GAMES'][game_match]['MINUTES'] += 1
-                elif after_game not in data[server.id]['GAMES']:
-                    data[server.id]['GAMES'][after_game] = {}
-                    data[server.id]['GAMES'][after_game]['MINUTES'] = 1
-                    data[server.id]['GAMES'][after_game]['GAME'] = after_game
-                else:
-                    data[server.id]['GAMES'][after_game]['MINUTES'] += 1
+                    if server.id not in data:
+                        data[server.id] = {}
+                        data[server.id]['GAMES'] = {}
+                    game_match = ''
+                    for game in data[server.id]['GAMES']:
+                        if self.match(str(game).upper(), after_game.upper()) > 0.89 and self.match(str(game).upper(),after_game.upper()) < 1.0:
+                            game_match = game
+                    if game_match in data[server.id]['GAMES']:
+                        data[server.id]['GAMES'][game_match]['MINUTES'] += 1
+                    elif after_game not in data[server.id]['GAMES']:
+                        data[server.id]['GAMES'][after_game] = {}
+                        data[server.id]['GAMES'][after_game]['MINUTES'] = 1
+                        data[server.id]['GAMES'][after_game]['GAME'] = after_game
+                    else:
+                        data[server.id]['GAMES'][after_game]['MINUTES'] += 1
 
         fileIO(self.data_file, 'save', data)
 
