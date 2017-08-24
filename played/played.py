@@ -18,7 +18,7 @@ class Played:
         server = context.message.server
         for member in server.members:
             if member.game is not None:
-                await self.bot.say(member.name + ' está jogando: ' member.game)
+                await self.bot.say(member.name + ' está jogando: ' + member.game)
 
 
 def check_folder():
