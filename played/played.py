@@ -16,9 +16,15 @@ class Played:
     async def _played(self, context):
         """Shows top 10 most popular games on this server."""
         server = context.message.server
+        message = '```Most popular games played on {}\n\n'.format(server.name)
         for member in server.members:
             if member.game is not None:
-                await self.bot.say(member.nick + ' está jogando: ' + member.game)
+
+                message += member.display_name
+                message += ' está jogando: '
+                message += member.game
+
+                await self.bot.say(message)
 
 
 def check_folder():
