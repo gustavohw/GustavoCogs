@@ -52,6 +52,11 @@ class Played:
             for game in data:
                 msg = str(game)
                 msg += ': '
+                if len(msg) < 31:
+                    rem = len(msg) - 31
+                    for x in range(0, rem):
+                        msg += " "
+
                 time = (data[game]['MINUTES'])
                 if time > 60:
                     hours = int(time/60)
