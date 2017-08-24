@@ -47,17 +47,21 @@ class Played:
         if server.id in data:
             data = data[server.id]['GAMES']
 
-            games_played = sorted(data, key=lambda x: (data[x]['MINUTES']), reverse=True)
-            await self.bot.say(games_played)
+            #games_played = sorted(data, key=lambda x: (data[x]['MINUTES']), reverse=True)
+
+            for game in data:
+                await self.bot.say(str(game))
+
 
             #games_played = sorted(data, key=lambda x: (data[x]['MINUTES']), reverse=True)
-            message = '```Jogos mais jogados no servidor:  {}\n\n'.format(server.name)
+            """message = '```Jogos mais jogados no servidor:  {}\n\n'.format(server.name)
             for i, game in enumerate(games_played, 1):
                 if i > 10:
                     break
-                message += '{:<5}{:<10}\n'.format(games_played, game)
+                gameMessage = ''
+                message += '{:<5}{:<10}\n'.format(game, game)
             message += '```'
-            await self.bot.say(message)
+            await self.bot.say(message)"""
 
 
 def check_folder():
