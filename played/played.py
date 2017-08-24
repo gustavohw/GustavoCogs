@@ -6,7 +6,7 @@ from difflib import SequenceMatcher
 class Played:
     def __init__(self, bot):
         self.bot = bot
-        self.data_file = 'data/played/played.json'
+        self.data_file = 'data/played/played2.json'
 
     def match(self, a, b):
         return SequenceMatcher(None, a, b).ratio()
@@ -22,23 +22,26 @@ class Played:
             data[server.id] = {}
             data[server.id]['MEMBERS'] = {}
             for member in server.members:
-
-                if member.status is not member.status.idle:
-                    if member.game is not None:
-                        after_game = str(member.game)
-
-                        game_match = ''
-                        for game in data[server.id]['GAMES']:
-                            if self.match(str(game).upper(), after_game.upper()) > 0.89 and self.match(str(game).upper(),after_game.upper()) < 1.0:
-                                game_match = game
-                        if game_match in data[server.id]['GAMES']:
-                            data[server.id]['GAMES'][game_match]['MINUTES'] += 1
-                        elif after_game not in data[server.id]['GAMES']:
-                            data[server.id]['GAMES'][after_game] = {}
-                            data[server.id]['GAMES'][after_game]['MINUTES'] = 1
-                            data[server.id]['GAMES'][after_game]['GAME'] = after_game
-                        else:
-                            data[server.id]['GAMES'][after_game]['MINUTES'] += 1
+                if member.id not in data[server.id]['MEMBERS']:
+                    data[server.id]['MEMBERS']['ID'] = member.id
+                else:
+                    data[server.id]['MEMBERS']['ID'] = {}
+                    data[server.id]['MEMBERS']['ID'] = member.id
+                    if member.status is not member.status.idle:
+                        if member.game is not None:
+                            after_game = str(member.game)
+                            game_match = ''
+                            for game in data[server.id]['MEMBERS'][member.id]['GAMES']:
+                                if self.match(str(game).upper(), after_game.upper()) > 0.89 and self.match(str(game).upper(),after_game.upper()) < 1.0:
+                                    game_match = game
+                            if game_match in data[server.id]['MEMBERS'][member.id]['GAMES']:
+                                data[server.id]['MEMBERS'][member.id]['GAMES'][game_match]['MINUTES'] += 1
+                            elif after_game not in data[server.id]['MEMBERS'][member.id]['GAMES']:
+                                data[server.id]['MEMBERS'][member.id]['GAMES'][after_game] = {}
+                                data[server.id]['MEMBERS'][member.id]['GAMES'][after_game]['MINUTES'] = 1
+                                data[server.id]['MEMBERS'][member.id]['GAMES'][after_game]['GAME'] = after_game
+                            else:
+                                data[server.id]['MEMBERS'][member.id]['GAMES'][after_game]['MINUTES'] += 1
 
         fileIO(self.data_file, 'save', data)
 
@@ -96,15 +99,15 @@ class Played:
 
 
 def check_folder():
-    if not os.path.exists('data/played'):
+    if not os.path.exists('data/played2'):
         print('Creating data/played folder...')
         os.makedirs('data/played')
 
 def check_file():
     data = {}
-    f = 'data/played/played.json'
+    f = 'data/played/played2.json'
     if not fileIO(f, 'check'):
-        print('Creating default played.json...')
+        print('Creating default played2.json...')
         fileIO(f, 'save', data)
 
 def setup(bot):
