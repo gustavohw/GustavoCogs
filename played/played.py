@@ -48,7 +48,7 @@ class Played:
         if server.id in data:
             data = data[server.id]['GAMES']
 
-            finalMsg = '```Jogos mais jogados no servidor: {}\n\n'.format(server.name)
+            finalMsg = '```10 Jogos mais jogados no servidor: {}\n\n'.format(server.name)
 
             games_played = sorted(data, key=lambda x: (data[x]['MINUTES']), reverse=True)
             i = 0
