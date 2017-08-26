@@ -48,10 +48,10 @@ class Played:
         if server.id in data:
             data = data[server.id]['GAMES']
 
-            #games_played = sorted(data, key=lambda x: (data[x]['MINUTES']), reverse=True)
             finalMsg = '```Jogos mais jogados no servidor: {}\n\n'.format(server.name)
 
-            for game in data:
+            games_played = sorted(data, key=lambda x: (data[x]['MINUTES']), reverse=True)
+            for game in games_played:
                 gamestr = str(game)
 
                 #if len(gamestr) < 31:
