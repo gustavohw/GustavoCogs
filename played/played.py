@@ -51,33 +51,36 @@ class Played:
             finalMsg = '```Jogos mais jogados no servidor: {}\n\n'.format(server.name)
 
             games_played = sorted(data, key=lambda x: (data[x]['MINUTES']), reverse=True)
+            i = 0
             for game in games_played:
-                gamestr = str(game)
+                if i < 10:
+                    gamestr = str(game)
 
-                #if len(gamestr) < 31:
-                    #msg = gamestr.ljust(31 - len(gamestr))
-                #else:
-                msg = gamestr
+                    #if len(gamestr) < 31:
+                        #msg = gamestr.ljust(31 - len(gamestr))
+                    #else:
+                    msg = gamestr
 
-                msg += ': '
-                time = (data[game]['MINUTES'])
-                if time > 60:
-                    hours = int(time/60)
-                    minutes = time % 60
-                    msg += str(hours)
-                    msg += ' horas e '
-                    msg += str(minutes)
-                    msg += ' minutos.'
-                else:
-                    minutes = time
-                    msg += str(minutes)
-                    if time is 1:
-                        msg += ' minuto.'
-                    else:
+                    msg += ': '
+                    time = (data[game]['MINUTES'])
+                    if time > 60:
+                        hours = int(time/60)
+                        minutes = time % 60
+                        msg += str(hours)
+                        msg += ' horas e '
+                        msg += str(minutes)
                         msg += ' minutos.'
+                    else:
+                        minutes = time
+                        msg += str(minutes)
+                        if time is 1:
+                            msg += ' minuto.'
+                        else:
+                            msg += ' minutos.'
 
-                msg += '\n'
-                finalMsg += msg
+                    msg += '\n'
+                    finalMsg += msg
+                    i += 1
             finalMsg += ' ```'
             await self.bot.say(finalMsg)
 
