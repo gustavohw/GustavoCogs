@@ -56,13 +56,10 @@ class Played:
                 if i < 10:
                     gamestr = str(game)
 
-                    #if len(gamestr) < 31:
-                        #msg = gamestr.ljust(31 - len(gamestr))
-                    #else:
                     msg = gamestr
-
                     msg += ': '
                     time = (data[game]['MINUTES'])
+                    #timeLast = (data[game]['MINUTES'])
                     if time > 60:
                         hours = int(time/60)
                         minutes = time % 60
@@ -83,17 +80,8 @@ class Played:
                     i += 1
             finalMsg += ' ```'
             await self.bot.say(finalMsg)
-
-
-            #games_played = sorted(data, key=lambda x: (data[x]['MINUTES']), reverse=True)
-            """message = '```Jogos mais jogados no servidor:  {}\n\n'.format(server.name)
-            for i, game in enumerate(games_played, 1):
-                if i > 10:
-                    break
-                gameMessage = ''
-                message += '{:<5}{:<10}\n'.format(game, game)
-            message += '```'
-            await self.bot.say(message)"""
+            #dataLast = data[server.id]['LASTDATA']['GAMES']
+            #fileIO(self.data_file, 'save', dataLast)
 
 
 def check_folder():
