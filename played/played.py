@@ -83,6 +83,13 @@ class Played:
             #dataLast = data[server.id]['LASTDATA']['GAMES']
             #fileIO(self.data_file, 'save', dataLast)
 
+def get_change(current, previous):
+    if current == previous:
+        return 100.0
+    try:
+       return ((current-previous)/previous)*100
+    except ZeroDivisionError:
+        return 0
 
 def check_folder():
     if not os.path.exists('data/played'):
