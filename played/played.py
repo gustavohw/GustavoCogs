@@ -69,7 +69,7 @@ class Played:
                         msg += str(minutes)
                         msg += ' minutos.'
                         msg += ' (+'
-                        msg += get_change(time, timeLast)
+                        msg += str(get_change(time, timeLast))
                         msg += '%)'
                     else:
                         minutes = time
@@ -79,7 +79,7 @@ class Played:
                         else:
                             msg += ' minutos.'
                             msg += ' (+'
-                            msg += get_change(time, timeLast)
+                            msg += str(get_change(time, timeLast))
                             msg += '%)'
 
                     msg += '\n'
