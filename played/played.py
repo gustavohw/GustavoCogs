@@ -59,7 +59,7 @@ class Played:
                     msg = gamestr
                     msg += ': '
                     time = (data[game]['MINUTES'])
-                    #timeLast = (data[game]['MINUTES'])
+                    timeLast = (data[game]['LASTPLAY'])
                     if time > 60:
                         hours = int(time/60)
                         minutes = time % 60
@@ -67,6 +67,9 @@ class Played:
                         msg += ' horas e '
                         msg += str(minutes)
                         msg += ' minutos.'
+                        msg += ' (+'
+                        msg += get_change(time, timeLast)
+                        msg += '%)'
                     else:
                         minutes = time
                         msg += str(minutes)
@@ -80,8 +83,11 @@ class Played:
                     i += 1
             finalMsg += ' ```'
             await self.bot.say(finalMsg)
-            #dataLast = data[server.id]['LASTDATA']['GAMES']
-            #fileIO(self.data_file, 'save', dataLast)
+
+            for game in data:
+                data[game]['LASTPLAY'] = data[game]['MINUTES']
+
+            fileIO(self.data_file, 'save', data)
 
 def get_change(current, previous):
     if current == previous:
