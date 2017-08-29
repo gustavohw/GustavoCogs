@@ -78,6 +78,9 @@ class Played:
                             msg += ' minuto.'
                         else:
                             msg += ' minutos.'
+                            msg += ' (+'
+                            msg += get_change(time, timeLast)
+                            msg += '%)'
 
                     msg += '\n'
                     finalMsg += msg
