@@ -68,8 +68,8 @@ class Played:
                         msg += ' horas e '
                         msg += str(minutes)
                         msg += ' minutos.'
-                        diff = format(get_change(time, timeLast), '.2f')
-                        if diff > 1:
+                        diff = get_change(time, timeLast)
+                        if diff > 0.05:
                             msg += ' (+'
                             msg += str(format(get_change(time, timeLast), '.2f'))
                             msg += '%)'
@@ -80,8 +80,8 @@ class Played:
                             msg += ' minuto.'
                         else:
                             msg += ' minutos.'
-                            diff = format(get_change(time, timeLast), '.2f')
-                            if diff > 1:
+                            diff = get_change(time, timeLast)
+                            if diff > 0.05:
                                 msg += ' (+'
                                 msg += str(format(get_change(time, timeLast), '.2f'))
                                 msg += '%)'
