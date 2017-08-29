@@ -35,6 +35,7 @@ class Played:
                         data[server.id]['GAMES'][after_game] = {}
                         data[server.id]['GAMES'][after_game]['MINUTES'] = 1
                         data[server.id]['GAMES'][after_game]['GAME'] = after_game
+                        data[server.id]['GAMES'][after_game]['LASTPLAY'] = 1
                     else:
                         data[server.id]['GAMES'][after_game]['MINUTES'] += 1
 
@@ -58,13 +59,8 @@ class Played:
 
                     msg = gamestr
                     msg += ': '
-                    time = (data[game]['MINUTES'])
-                    if data[game]['LASTPLAY'] not in data[game]:
-                        data[game]['LASTPLAY'] = {}
-                        data[game]['LASTPLAY'] = data[game]['MINUTES']
-                        timeLast = data[game]['LASTPLAY']
-                    else:
-                        timeLast = data[game]['LASTPLAY']
+                    time = data[game]['MINUTES']
+                    timeLast = data[game]['LASTPLAY']
                     if time > 60:
                         hours = int(time/60)
                         minutes = time % 60
