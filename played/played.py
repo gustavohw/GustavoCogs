@@ -87,13 +87,13 @@ class Played:
             await self.bot.say(finalMsg)
 
     def save_last(self, server):
-        data = fileIO(Played.data_file, 'load')
+        data = fileIO(self.data_file, 'load')
 
         if server.id in data:
             for game in data[server.id]['GAMES']:
                 data[server.id]['GAMES'][game]['LASTPLAY'] = data[server.id]['GAMES'][game]['MINUTES']
 
-        fileIO(Played.data_file, 'save', data)
+        fileIO(self.data_file, 'save', data)
 
 def get_change(current, previous):
     if current == previous:
