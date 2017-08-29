@@ -86,7 +86,7 @@ class Played:
             await self.bot.say(finalMsg)
 
             for game in data:
-                data[game]['LASTPLAY'] = data[game]['MINUTES']
+                data[server.id]['GAMES'][game]['LASTPLAY'] = data[server.id]['GAMES'][game]['MINUTES']
 
             fileIO(self.data_file, 'save', data)
 
