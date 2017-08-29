@@ -69,7 +69,7 @@ class Played:
                         msg += str(minutes)
                         msg += ' minutos.'
                         msg += ' (+'
-                        msg += str(get_change(time, timeLast))
+                        msg += str(format(get_change(time, timeLast), '.2f'))
                         msg += '%)'
                     else:
                         minutes = time
@@ -79,7 +79,7 @@ class Played:
                         else:
                             msg += ' minutos.'
                             msg += ' (+'
-                            msg += str(get_change(time, timeLast))
+                            msg += str(format(get_change(time, timeLast), '.2f'))
                             msg += '%)'
 
                     msg += '\n'
@@ -100,7 +100,7 @@ class Played:
 
 def get_change(current, previous):
     if current == previous:
-        return 100.0
+        return 0
     try:
        return ((current-previous)/previous)*100
     except ZeroDivisionError:
