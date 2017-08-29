@@ -59,7 +59,11 @@ class Played:
                     msg = gamestr
                     msg += ': '
                     time = (data[game]['MINUTES'])
-                    timeLast = (data[game]['LASTPLAY'])
+                    if data[game]['LASTPLAY'] not in data[game]:
+                        data[game]['LASTPLAY'] = {}
+                        timeLast = (data[game]['LASTPLAY'])
+                    else:
+                        timeLast = (data[game]['LASTPLAY'])
                     if time > 60:
                         hours = int(time/60)
                         minutes = time % 60
