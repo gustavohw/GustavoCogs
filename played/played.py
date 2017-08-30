@@ -46,7 +46,7 @@ class Played:
         """Shows playtime per game."""
         server = context.message.server
         data = fileIO(self.data_file, 'load')
-        await self.bot.say(context.kwargs)
+        await self.bot.say(context.message.content)
         """if context.message is not None:
             ar = context.message
             if ar == "all":
