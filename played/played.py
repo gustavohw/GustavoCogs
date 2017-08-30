@@ -46,15 +46,17 @@ class Played:
         """Shows playtime per game."""
         server = context.message.server
         data = fileIO(self.data_file, 'load')
-        await self.ctx.send(context.message)
-        if context.message is not None:
+        await self.bot.say(context.kwargs)
+        """if context.message is not None:
             ar = context.message
             if ar == "all":
                 limit = 30
                 finalMsg = '```30 Jogos mais jogados no servidor: {}\n\n'.format(server.name)
             else:
                 limit = 10
-                finalMsg = '```10 Jogos mais jogados no servidor: {}\n\n'.format(server.name)
+                finalMsg = '```10 Jogos mais jogados no servidor: {}\n\n'.format(server.name)"""
+
+        limit = 10
         if server.id in data:
             data = data[server.id]['GAMES']
 
