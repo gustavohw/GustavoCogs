@@ -42,7 +42,7 @@ class Played:
         fileIO(self.data_file, 'save', data)
 
     @commands.command(pass_context=True, no_pm=True, name='played')
-    async def _played(self, context, *message):
+    async def _played(self, context, message):
         """Shows playtime per game."""
         server = context.message.server
         data = fileIO(self.data_file, 'load')
