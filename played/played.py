@@ -48,7 +48,8 @@ class Played:
         data = fileIO(self.data_file, 'load')
         ar = "top10"
         if message is not None:
-            if ar is "all":
+            ar = message[0]
+            if ar == "all":
                 limit = 30
                 finalMsg = '```30 Jogos mais jogados no servidor: {}\n\n'.format(server.name)
             else:
