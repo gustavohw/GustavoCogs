@@ -42,12 +42,13 @@ class Played:
         fileIO(self.data_file, 'save', data)
 
     @commands.command(pass_context=True, no_pm=True, name='played')
-    async def _played(self, context, mess):
+    async def _played(self, context):
         """Shows playtime per game."""
         server = context.message.server
         data = fileIO(self.data_file, 'load')
-        if mess is not None:
-            ar = mess
+        await ctx.send(context.message)
+        if context.message is not None:
+            ar = context.message
             if ar == "all":
                 limit = 30
                 finalMsg = '```30 Jogos mais jogados no servidor: {}\n\n'.format(server.name)
