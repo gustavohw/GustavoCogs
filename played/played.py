@@ -42,10 +42,14 @@ class Played:
         fileIO(self.data_file, 'save', data)
 
     @commands.command(pass_context=True, no_pm=True, name='played')
-    async def _played(self, context):
+    async def _played(self, context, *message):
         """Shows playtime per game."""
         server = context.message.server
         data = fileIO(self.data_file, 'load')
+        if message == "all":
+            limit = 30
+        else:
+            limit = 10
         if server.id in data:
             data = data[server.id]['GAMES']
 
@@ -54,7 +58,7 @@ class Played:
             games_played = sorted(data, key=lambda x: (data[x]['MINUTES']), reverse=True)
             i = 0
             for game in games_played:
-                if i < 10:
+                if i < limit:
                     gamestr = str(game)
 
                     msg = gamestr
