@@ -46,10 +46,9 @@ class Played:
         """Shows playtime per game."""
         server = context.message.server
         data = fileIO(self.data_file, 'load')
-        if message is None:
-            message[0] = "10"
-        else:
-            if message[0] == "all":
+        ar = "top10"
+        if message is not None:
+            if ar is "all":
                 limit = 30
                 finalMsg = '```30 Jogos mais jogados no servidor: {}\n\n'.format(server.name)
             else:
