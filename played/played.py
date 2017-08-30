@@ -48,12 +48,12 @@ class Played:
         data = fileIO(self.data_file, 'load')
         if message == "all":
             limit = 30
+            finalMsg = '```30 Jogos mais jogados no servidor: {}\n\n'.format(server.name)
         else:
             limit = 10
+            finalMsg = '```10 Jogos mais jogados no servidor: {}\n\n'.format(server.name)
         if server.id in data:
             data = data[server.id]['GAMES']
-
-            finalMsg = '```10 Jogos mais jogados no servidor: {}\n\n'.format(server.name)
 
             games_played = sorted(data, key=lambda x: (data[x]['MINUTES']), reverse=True)
             i = 0
