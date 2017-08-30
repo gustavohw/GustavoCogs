@@ -46,8 +46,8 @@ class Played:
         """Shows playtime per game."""
         server = context.message.server
         data = fileIO(self.data_file, 'load')
-        mes = context.message.content
-        if mes == ">played all":
+        mes = str(context.message.content).lstrip(':')
+        if mes == "played all":
             limit = 30
             finalMsg = '```30 Jogos mais jogados no servidor: {}\n\n'.format(server.name)
         else:
