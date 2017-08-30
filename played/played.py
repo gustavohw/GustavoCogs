@@ -46,7 +46,7 @@ class Played:
         """Shows playtime per game."""
         server = context.message.server
         data = fileIO(self.data_file, 'load')
-        await ctx.send(context.message)
+        await self.ctx.send(context.message)
         if context.message is not None:
             ar = context.message
             if ar == "all":
