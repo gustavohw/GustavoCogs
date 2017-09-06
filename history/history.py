@@ -25,11 +25,14 @@ class History:
             if after.id in data[server.id]:
                 if after_status is Member.status.online:
                     hour_minute = '{}:{}'.format(datetime.datetime.today().hour, datetime.datetime.today().minute)
+                    data[server.id][after.id]['ONLINE'] = {}
                     data[server.id][after.id]['ONLINE'] = 123
                 if after_status is Member.status.offline:
                     hour_minute = '{}:{}'.format(datetime.datetime.today().hour, datetime.datetime.today().minute)
+                    data[server.id][after.id]['OFFLINE'] = {}
                     data[server.id][after.id]['OFFLINE'] = str(hour_minute)
                 else:
+                    data[server.id][after.id]['TESTING'] = {}
                     data[server.id][after.id]['TESTING'] = 'testing'
             else:
                 data[server.id][after.id] = {}
