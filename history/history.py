@@ -12,7 +12,7 @@ class History:
         before_status = str(before.status)
         try:
             #after_game = str(after.game)
-            after_status = str(before.status)
+            after_status = str(after.status)
         except TypeError:
             #after_game = 'None'
             after_status = 'None'
