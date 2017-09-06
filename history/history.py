@@ -2,6 +2,7 @@ import os
 from discord.ext import commands
 from .utils.dataIO import fileIO
 import datetime
+import discord
 
 class History:
     def __init__(self, bot):
@@ -22,7 +23,15 @@ class History:
             data = fileIO('data/history/' + GetCurrentDate() + '.json', 'load')
             if server.id not in data:
                 data[server.id] = {}
-                data[server.id][after.id] = {}
+                if after.id not in data[server.id]:
+                    data[server.id][after.id] = {}
+                else:
+                    if after_status is discord.Member.status.online:
+                        hour_minute = '{}:{}'.format(datetime.datetime.today().hour, datetime.datetime.today().minute)
+                        data[server.id][after.id]['Went Online'] = str(hour_minute)
+                    if after_status is discord.Member.status.offline:
+                        hour_minute = '{}:{}'.format(datetime.datetime.today().hour, datetime.datetime.today().minute)
+                        data[server.id][after.id]['Went Offline'] = str(hour_minute)
 
             fileIO('data/history/' + GetCurrentDate() + '.json', 'save', data)
 
