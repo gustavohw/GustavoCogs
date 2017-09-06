@@ -14,8 +14,8 @@ class History:
     async def _show(self, context):
         """Nein."""
         server = context.message.server
-        for m in server.members:
-            msg = 'Member is {}'.format(m.member.status)
+        for member in server.members:
+            msg = 'Member is {}'.format(member.status)
             await self.bot.say(msg)
 
 def CheckFolder():
