@@ -27,7 +27,7 @@ class History:
             else:
                 if after_status is member.status.online:
                     hour_minute = '{}:{}'.format(datetime.datetime.today().hour, datetime.datetime.today().minute)
-                    data[server.id][after.id]['ONLINE'] = str(hour_minute)
+                    data[server.id][after.id]['ONLINE'] = 123
                 if after_status is member.status.offline:
                     hour_minute = '{}:{}'.format(datetime.datetime.today().hour, datetime.datetime.today().minute)
                     data[server.id][after.id]['OFFLINE'] = str(hour_minute)
