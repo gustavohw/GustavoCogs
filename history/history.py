@@ -8,7 +8,17 @@ class History:
         self.bot = bot
 
     async def listener(self, before, after):
+        server = after.server
         await self.bot.say(str(after.status))
+
+
+
+    @commands.command(pass_context=True, no_pm=True, name='show')
+    async def _show(self, context):
+        """Nein."""
+        server = context.message.server
+        for m in server.members:
+            await self.bot.say(str(m.status))
 
 def CheckFolder():
     if not os.path.exists('data/history'):
