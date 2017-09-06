@@ -8,14 +8,22 @@ class History:
         self.bot = bot
 
     async def listener(self, before, after):
+        before_game = str(before.game)
+        before_status = str(before.status)
+        try:
+            after_game = str(after.game)
+        except TypeError:
+            after_game = 'None'
         server = after.server
 
     @commands.command(pass_context=True, no_pm=True, name='show')
     async def _show(self, context):
         """Nein."""
         server = context.message.server
+
         for member in server.members:
-            msg = 'Member {} is {}'.format(member.name, member.status)
+            msg = 'Member {} is {} on {} server'.format(member.name, member.status, server.name)
+
             await self.bot.say(msg)
 
 def CheckFolder():
