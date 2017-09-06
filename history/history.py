@@ -15,7 +15,7 @@ class History:
         """Nein."""
         server = context.message.server
         for m in server.members:
-            await self.bot.say(str(m.name +  m.status))
+            await self.bot.say(str(m.nick +  m.status))
 
 def CheckFolder():
     if not os.path.exists('data/history'):
