@@ -25,12 +25,14 @@ class History:
             if after.id not in data[server.id]:
                 data[server.id][after.id] = {}
             else:
-                if after_status is member.status.online:
+                if after_status is Member.status.online:
                     hour_minute = '{}:{}'.format(datetime.datetime.today().hour, datetime.datetime.today().minute)
                     data[server.id][after.id]['ONLINE'] = 123
-                if after_status is member.status.offline:
+                if after_status is Member.status.offline:
                     hour_minute = '{}:{}'.format(datetime.datetime.today().hour, datetime.datetime.today().minute)
                     data[server.id][after.id]['OFFLINE'] = str(hour_minute)
+                else:
+                    data[server.id][after.id]['TESTING'] = 'testing'
 
             fileIO('data/history/' + GetCurrentDate() + '.json', 'save', data)
 
