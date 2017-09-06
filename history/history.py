@@ -7,8 +7,8 @@ class History:
     def __init__(self, bot):
         self.bot = bot
 
-    async def listener(self, member):
-        await self.bot.say(str(member.status))
+    async def listener(self, before, after):
+        await self.bot.say(str(after.status))
 
 def CheckFolder():
     if not os.path.exists('data/history'):
@@ -32,5 +32,5 @@ def setup(bot):
     CheckFolder()
     CreateDayFile()
     n = History(bot)
-    bot.add_listener(n.listener(), 'on_member_join')
+    bot.add_listener(n.listener(), 'on_member_update')
     bot.add_cog(n)
