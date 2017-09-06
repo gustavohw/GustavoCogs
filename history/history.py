@@ -24,6 +24,8 @@ class History:
                 data[server.id] = {}
                 data[server.id][after.id] = {}
 
+            fileIO('data/history/' + GetCurrentDate() + '.json', 'load', 'save', data)
+
 
 
     @commands.command(pass_context=True, no_pm=True, name='show')
