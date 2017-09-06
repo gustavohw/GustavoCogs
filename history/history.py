@@ -32,5 +32,5 @@ def setup(bot):
     CheckFolder()
     CreateDayFile()
     n = History(bot)
-    bot.add_listener(n.listener(), 'on_member_update')
+    bot.add_listener(n.listener, 'on_member_update')
     bot.add_cog(n)
