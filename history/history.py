@@ -8,7 +8,7 @@ class History:
         self.bot = bot
 
     async def listener(self, member):
-        await self.bot.say(member.status)
+        await self.bot.say(str(member.status))
 
 def CheckFolder():
     if not os.path.exists('data/history'):
@@ -22,7 +22,7 @@ def CreateDayFile():
     month = datetime.datetime.today().date().month
     day = datetime.datetime.today().date().day
 
-    file = day + '-' + month + '-' + year + '.json'
+    file = 'data/history/' + day + '-' + month + '-' + year + '.json'
 
     if not fileIO(file, 'check'):
         print('Json file for today not found, creating')
