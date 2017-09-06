@@ -9,9 +9,6 @@ class History:
 
     async def listener(self, before, after):
         server = after.server
-        await self.bot.say(str(after.status))
-
-
 
     @commands.command(pass_context=True, no_pm=True, name='show')
     async def _show(self, context):
