@@ -15,8 +15,7 @@ class History:
         """Nein."""
         server = context.message.server
         for m in server.members:
-            msg = m.nick
-            msg += m.status
+            msg = 'Member {} is {}'.format(m.member.name, m.member.status)
             await self.bot.say(str(msg))
 
 def CheckFolder():
