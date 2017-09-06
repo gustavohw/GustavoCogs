@@ -24,7 +24,7 @@ class History:
                 data[server.id] = {}
                 data[server.id][after.id] = {}
 
-            fileIO('data/history/' + GetCurrentDate() + '.json', 'load', 'save', data)
+            fileIO('data/history/' + GetCurrentDate() + '.json', 'save', data)
 
 
 
