@@ -18,9 +18,9 @@ def CheckFolder():
 def CreateDayFile():
     data = {}
 
-    year = datetime.datetime.today().date().year
-    month = datetime.datetime.today().date().month
-    day = datetime.datetime.today().date().day
+    year = str(datetime.datetime.today().date().year)
+    month = str(datetime.datetime.today().date().month)
+    day = str(datetime.datetime.today().date().day)
 
     file = 'data/history/' + day + '-' + month + '-' + year + '.json'
 
