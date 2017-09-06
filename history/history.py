@@ -8,13 +8,23 @@ class History:
         self.bot = bot
 
     async def listener(self, before, after):
-        before_game = str(before.game)
+        #before_game = str(before.game)
         before_status = str(before.status)
         try:
-            after_game = str(after.game)
+            #after_game = str(after.game)
+            after_status = str(before.status)
         except TypeError:
-            after_game = 'None'
+            #after_game = 'None'
+            after_status = 'None'
         server = after.server
+
+        if not after.bot:
+            data = fileIO('data/history/' + GetCurrentDate() + '.json', 'load')
+            if server.id not in data:
+                data[server.id] = {}
+                data[server.id][after.id] = {}
+
+
 
     @commands.command(pass_context=True, no_pm=True, name='show')
     async def _show(self, context):
@@ -31,14 +41,17 @@ def CheckFolder():
         print('Creating data/history folder...')
         os.makedirs('data/history')
 
-def CreateDayFile():
-    data = {}
-
+def GetCurrentDate():
     year = str(datetime.datetime.today().date().year)
     month = str(datetime.datetime.today().date().month)
     day = str(datetime.datetime.today().date().day)
 
-    file = 'data/history/' + day + '-' + month + '-' + year + '.json'
+    formated = day + '-' + month + '-' + year
+    return formated
+
+def CreateDayFile():
+    data = {}
+    file = 'data/history/' + GetCurrentDate() + '.json'
 
     if not fileIO(file, 'check'):
         print('Json file for today not found, creating')
