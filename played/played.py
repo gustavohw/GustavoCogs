@@ -97,7 +97,8 @@ class Played:
                             # msg += str(format(get_change(time, timeLast), '.2f'))
                             # msg += '%)'
 
-                    msg += '\n'
+                    if i < 10:
+                        msg += '\n'
                     finalMsg += msg
                     i += 1
             finalMsg += ' ```'
