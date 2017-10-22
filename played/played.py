@@ -63,39 +63,24 @@ class Played:
                 if i < limit:
                     gamestr = str(game)
 
-                    # msg = gamestr
-                    # msg += ': '
                     time = data[game]['MINUTES']
                     timeLast = data[game]['LASTPLAY']
                     if time > 60:
                         hours = int(time/60)
                         minutes = time % 60
-                        # msg += str(hours)
-                        # msg += ' horas e '
-                        # msg += str(minutes)
-                        # msg += ' minutos.'
-
                         msg = '{:<5}{}: {} horas e {} minutos.'.format(i+1, gamestr, str(hours), str(minutes))
 
                         diff = get_change(time, timeLast)
                         if diff > 0.05:
-
                             msg += ' (+{}%)'.format(str(format(get_change(time, timeLast), '.2f')))
-
-                            # msg += ' (+'
-                            # msg += str(format(get_change(time, timeLast), '.2f'))
-                            # msg += '%)'
                     else:
                         minutes = time
                         msg = '{:<5}{}: {} minutos.'.format(i+1, gamestr, str(minutes))
-                        # msg += str(minutes)
-                        # msg += ' minuto.'
+
                         diff = get_change(time, timeLast)
                         if diff > 0.05:
                             msg += ' (+{}%)'.format(str(format(get_change(time, timeLast), '.2f')))
-                            # msg += ' (+'
-                            # msg += str(format(get_change(time, timeLast), '.2f'))
-                            # msg += '%)'
+
                     msg += '\n'
                     finalMsg += msg
                     i += 1
