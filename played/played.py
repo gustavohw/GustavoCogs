@@ -75,7 +75,7 @@ class Played:
                         # msg += str(minutes)
                         # msg += ' minutos.'
 
-                        msg = '{}. {}: {} horas e {} minutos.'.format(i, gamestr, str(hours), str(minutes))
+                        msg = '{}. {}: {} horas e {} minutos.'.format(i+1, gamestr, str(hours), str(minutes))
 
                         diff = get_change(time, timeLast)
                         if diff > 0.05:
