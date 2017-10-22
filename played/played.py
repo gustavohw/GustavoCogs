@@ -98,9 +98,9 @@ class Played:
                             # msg += '%)'
 
                     msg += '\n'
-                    finalMsg += '{} ```'.format(msg)
+                    finalMsg += msg
                     i += 1
-            # finalMsg += ' ```'
+            finalMsg += ' ```'
             self.save_last(server)
             await self.bot.say(finalMsg)
 
