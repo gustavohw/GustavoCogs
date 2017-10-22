@@ -87,7 +87,7 @@ class Played:
                             # msg += '%)'
                     else:
                         minutes = time
-                        msg = '{} minutos.'.format(str(minutes))
+                        msg = '{:<5}{}: {} minutos.'.format(i+1, gamestr, str(minutes))
                         # msg += str(minutes)
                         # msg += ' minuto.'
                         diff = get_change(time, timeLast)
