@@ -80,7 +80,7 @@ class Played:
                         diff = get_change(time, timeLast)
                         if diff > 0.05:
 
-                            msg += ' (+{:<5}%)'.format(str(format(get_change(time, timeLast), '.2f')))
+                            msg += ' (+{}%)'.format(str(format(get_change(time, timeLast), '.2f')))
 
                             # msg += ' (+'
                             # msg += str(format(get_change(time, timeLast), '.2f'))
@@ -92,7 +92,7 @@ class Played:
                         # msg += ' minuto.'
                         diff = get_change(time, timeLast)
                         if diff > 0.05:
-                            msg += ' (+{:<5}%)'.format(str(format(get_change(time, timeLast), '.2f')))
+                            msg += ' (+{}%)'.format(str(format(get_change(time, timeLast), '.2f')))
                             # msg += ' (+'
                             # msg += str(format(get_change(time, timeLast), '.2f'))
                             # msg += '%)'
