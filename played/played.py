@@ -75,24 +75,24 @@ class Played:
                         # msg += str(minutes)
                         # msg += ' minutos.'
 
-                        msg = '{:<5}{}: {} horas e {} minutos.\n'.format(i+1, gamestr, str(hours), str(minutes))
+                        msg = '{:<5}{}: {} horas e {} minutos.'.format(i+1, gamestr, str(hours), str(minutes))
 
                         diff = get_change(time, timeLast)
                         if diff > 0.05:
 
-                            msg += ' (+{}%)'.format(str(format(get_change(time, timeLast), '.2f')))
+                            msg += ' (+{}%)\n'.format(str(format(get_change(time, timeLast), '.2f')))
 
                             # msg += ' (+'
                             # msg += str(format(get_change(time, timeLast), '.2f'))
                             # msg += '%)'
                     else:
                         minutes = time
-                        msg = '{} minutos.\n'.format(str(minutes))
+                        msg = '{} minutos.'.format(str(minutes))
                         # msg += str(minutes)
                         # msg += ' minuto.'
                         diff = get_change(time, timeLast)
                         if diff > 0.05:
-                            msg += ' (+{}%)'.format(str(format(get_change(time, timeLast), '.2f')))
+                            msg += ' (+{}%)\n'.format(str(format(get_change(time, timeLast), '.2f')))
                             # msg += ' (+'
                             # msg += str(format(get_change(time, timeLast), '.2f'))
                             # msg += '%)'
