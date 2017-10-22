@@ -63,39 +63,44 @@ class Played:
                 if i < limit:
                     gamestr = str(game)
 
-                    msg = gamestr
-                    msg += ': '
+                    # msg = gamestr
+                    # msg += ': '
                     time = data[game]['MINUTES']
                     timeLast = data[game]['LASTPLAY']
                     if time > 60:
                         hours = int(time/60)
                         minutes = time % 60
-                        msg += str(hours)
-                        msg += ' horas e '
-                        msg += str(minutes)
-                        msg += ' minutos.'
+                        # msg += str(hours)
+                        # msg += ' horas e '
+                        # msg += str(minutes)
+                        # msg += ' minutos.'
+
+                        msg = '{}. {}: {} horas e {} minutos.'.format(i, gamestr, str(hours), str(minutes))
+
                         diff = get_change(time, timeLast)
                         if diff > 0.05:
-                            msg += ' (+'
-                            msg += str(format(get_change(time, timeLast), '.2f'))
-                            msg += '%)'
+
+                            msg += ' (+{}%)'.format(str(format(get_change(time, timeLast), '.2f')))
+
+                            # msg += ' (+'
+                            # msg += str(format(get_change(time, timeLast), '.2f'))
+                            # msg += '%)'
                     else:
                         minutes = time
-                        msg += str(minutes)
-                        if time is 1:
-                            msg += ' minuto.'
-                        else:
-                            msg += ' minutos.'
-                            diff = get_change(time, timeLast)
-                            if diff > 0.05:
-                                msg += ' (+'
-                                msg += str(format(get_change(time, timeLast), '.2f'))
-                                msg += '%)'
+                        msg = '{} minutos.'.format(str(minutes))
+                        # msg += str(minutes)
+                        # msg += ' minuto.'
+                        diff = get_change(time, timeLast)
+                        if diff > 0.05:
+                            msg += ' (+{}%)'.format(str(format(get_change(time, timeLast), '.2f')))
+                            # msg += ' (+'
+                            # msg += str(format(get_change(time, timeLast), '.2f'))
+                            # msg += '%)'
 
                     msg += '\n'
-                    finalMsg += msg
+                    finalMsg += '{} ```'.format(msg)
                     i += 1
-            finalMsg += ' ```'
+            # finalMsg += ' ```'
             self.save_last(server)
             await self.bot.say(finalMsg)
 
