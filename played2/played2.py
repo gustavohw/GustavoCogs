@@ -22,13 +22,14 @@ class Played2:
             if member.status is not member.status.idle:
                 if member.game is not None:
                     after_game = str(member.game)
-                    game_match = ''
                     member_id = str(member.id)
+                    game_match = ''
 
                     if server.id not in data:
                         data[server.id] = {}
 
                     if member_id not in data[server.id]:
+                        data[server.id][member_id] = {}
                         data[server.id][member_id]['GAMES'] = {}
                         data[server.id][member_id]['GAMES'][after_game] = {}
                         data[server.id][member_id]['GAMES'][after_game]['GAME'] = after_game
