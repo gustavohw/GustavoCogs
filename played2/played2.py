@@ -44,7 +44,7 @@ class Played2:
                             data[server.id][member_id]['GAMES'][after_game]['MINUTES'] = 1
                             data[server.id][member_id]['GAMES'][after_game]['LASTPLAY'] = 1
                         else:
-                            data[server.id][member_id]['INFO']['NAME'] = member.nick
+                            data[server.id][member_id]['INFO']['NAME'] = member.name
                             data[server.id][member_id]['GAMES'][after_game]['MINUTES'] += 1
 
         fileIO(self.data_file, 'save', data)
