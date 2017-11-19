@@ -31,7 +31,7 @@ class Played2:
                     if member_id not in data[server.id]:
                         data[server.id][member_id] = {}
                         data[server.id][member_id]['INFO'] = {}
-                        data[server.id][member_id]['INFO']['NAME'] = member.nick
+                        data[server.id][member_id]['INFO']['NAME'] = member.display_name
                         data[server.id][member_id]['GAMES'] = {}
                         data[server.id][member_id]['GAMES'][after_game] = {}
                         data[server.id][member_id]['GAMES'][after_game]['GAME'] = after_game
