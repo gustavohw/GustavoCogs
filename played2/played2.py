@@ -12,8 +12,8 @@ class Played2:
         return SequenceMatcher(None, a, b).ratio()
 
     # TODO: Adicionar hook pra pegar @menção e fazer mais uma key em baixo do Game pra conter Nome : Tempo
-    @commands.command(pass_context=True, no_pm=True, name='getPlay2')
-    async def _getPlay2(self, context):
+    @commands.command(pass_context=True, no_pm=True, name='getTime')
+    async def _getTime(self, context):
         """Schedule this per 1 minute basis."""
 
         server = context.message.server
