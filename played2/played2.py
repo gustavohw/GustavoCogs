@@ -23,24 +23,25 @@ class Played2:
                 if member.game is not None:
                     after_game = str(member.game)
                     game_match = ''
+                    member_id = str(member.id)
 
                     if server.id not in data:
                         data[server.id] = {}
 
-                    if member.id not in data[server.id]:
-                        data[server.id][member.id]['GAMES'] = {}
-                        data[server.id][member.id]['GAMES'][after_game] = {}
-                        data[server.id][member.id]['GAMES'][after_game]['GAME'] = after_game
-                        data[server.id][member.id]['GAMES'][after_game]['MINUTES'] = 1
-                        data[server.id][member.id]['GAMES'][after_game]['LASTPLAY'] = 1
-                    elif member.id in data[server.id]:
-                        if after_game not in data[server.id][member.id]['GAMES']:
-                            data[server.id][member.id]['GAMES'][after_game] = {}
-                            data[server.id][member.id]['GAMES'][after_game]['GAME'] = after_game
-                            data[server.id][member.id]['GAMES'][after_game]['MINUTES'] = 1
-                            data[server.id][member.id]['GAMES'][after_game]['LASTPLAY'] = 1
+                    if member_id not in data[server.id]:
+                        data[server.id][member_id]['GAMES'] = {}
+                        data[server.id][member_id]['GAMES'][after_game] = {}
+                        data[server.id][member_id]['GAMES'][after_game]['GAME'] = after_game
+                        data[server.id][member_id]['GAMES'][after_game]['MINUTES'] = 1
+                        data[server.id][member_id]['GAMES'][after_game]['LASTPLAY'] = 1
+                    elif member_id in data[server.id]:
+                        if after_game not in data[server.id][member_id]['GAMES']:
+                            data[server.id][member_id]['GAMES'][after_game] = {}
+                            data[server.id][member_id]['GAMES'][after_game]['GAME'] = after_game
+                            data[server.id][member_id]['GAMES'][after_game]['MINUTES'] = 1
+                            data[server.id][member_id]['GAMES'][after_game]['LASTPLAY'] = 1
                         else:
-                            data[server.id][member.id]['GAMES'][after_game]['MINUTES'] += 1
+                            data[server.id][member_id]['GAMES'][after_game]['MINUTES'] += 1
 
         fileIO(self.data_file, 'save', data)
 
