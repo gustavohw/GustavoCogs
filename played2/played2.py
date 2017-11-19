@@ -30,6 +30,8 @@ class Played2:
 
                     if member_id not in data[server.id]:
                         data[server.id][member_id] = {}
+                        data[server.id][member_id]['INFO'] = {}
+                        data[server.id][member_id]['INFO']['NAME'] = member.nick
                         data[server.id][member_id]['GAMES'] = {}
                         data[server.id][member_id]['GAMES'][after_game] = {}
                         data[server.id][member_id]['GAMES'][after_game]['GAME'] = after_game
@@ -42,6 +44,7 @@ class Played2:
                             data[server.id][member_id]['GAMES'][after_game]['MINUTES'] = 1
                             data[server.id][member_id]['GAMES'][after_game]['LASTPLAY'] = 1
                         else:
+                            data[server.id][member_id]['INFO']['NAME'] = member.nick
                             data[server.id][member_id]['GAMES'][after_game]['MINUTES'] += 1
 
         fileIO(self.data_file, 'save', data)
@@ -60,7 +63,7 @@ class Played2:
             finalMsg = '```10 Jogos mais jogados no servidor: {}\n\n'.format(server.name)
 
         if server.id in data:
-            data = data[server.id]['GAMES']
+            data = data[server.id]
 
             games_played = sorted(data, key=lambda x: (data[x]['MINUTES']), reverse=True)
             i = 0
