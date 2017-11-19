@@ -3,7 +3,7 @@ from discord.ext import commands
 from .utils.dataIO import fileIO
 from difflib import SequenceMatcher
 
-class Played:
+class Played2:
     def __init__(self, bot):
         self.bot = bot
         self.data_file = 'data/played2/played.json'
