@@ -111,7 +111,7 @@ class Played2:
 def sort_games(data):
     games_unsorted = None
     if data is not None:
-        for key, value in data:
+        for key in data:
             for g in key:
                 games_unsorted['GAME'] += g['GAME']
                 games_unsorted['LASTPLAY'] += g['LASTPLAY']
