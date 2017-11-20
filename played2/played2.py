@@ -49,69 +49,69 @@ class Played2:
 
         fileIO(self.data_file, 'save', data)
 
-#     @commands.command(pass_context=True, no_pm=True, name='played2')
-#     async def _played2(self, context):
-#         """Shows playtime per game."""
-#         server = context.message.server
-#         data = fileIO(self.data_file, 'load')
-#         mes = str(context.message.content)[1:]
-#         if mes == "played all":
-#             limit = 30
-#             finalMsg = '```30 Jogos mais jogados no servidor: {}\n\n'.format(server.name)
-#         else:
-#             limit = 10
-#             finalMsg = '```10 Jogos mais jogados no servidor: {}\n\n'.format(server.name)
-#
-#         if server.id in data:
-#             data = data[server.id]
-#
-#             games_played = sorted(data, key=lambda x: (data[x]['MINUTES']), reverse=True)
-#             i = 0
-#             for game in games_played:
-#                 if i < limit:
-#                     gamestr = str(game)
-#
-#                     time = data[game]['MINUTES']
-#                     timeLast = data[game]['LASTPLAY']
-#                     if time > 60:
-#                         hours = int(time/60)
-#                         minutes = time % 60
-#                         msg = '{:<5}{}: {} horas e {} minutos.'.format(i+1, gamestr, str(hours), str(minutes))
-#
-#                         diff = get_change(time, timeLast)
-#                         if diff > 0.05:
-#                             msg += ' (+{}%)'.format(str(format(get_change(time, timeLast), '.2f')))
-#                     else:
-#                         minutes = time
-#                         msg = '{:<5}{}: {} minutos.'.format(i+1, gamestr, str(minutes))
-#
-#                         diff = get_change(time, timeLast)
-#                         if diff > 0.05:
-#                             msg += ' (+{}%)'.format(str(format(get_change(time, timeLast), '.2f')))
-#
-#                     msg += '\n'
-#                     finalMsg += msg
-#                     i += 1
-#             finalMsg += ' ```'
-#             self.save_last(server)
-#             await self.bot.say(finalMsg)
-#
-#     def save_last(self, server):
-#         data = fileIO(self.data_file, 'load')
-#
-#         if server.id in data:
-#             for game in data[server.id]['GAMES']:
-#                 data[server.id]['GAMES'][game]['LASTPLAY'] = data[server.id]['GAMES'][game]['MINUTES']
-#
-#         fileIO(self.data_file, 'save', data)
-#
-# def get_change(current, previous):
-#     if current == previous:
-#         return 0
-#     try:
-#        return ((current-previous)/previous)*100
-#     except ZeroDivisionError:
-#         return 0
+    @commands.command(pass_context=True, no_pm=True, name='played2')
+    async def _played2(self, context):
+        """Shows playtime per game."""
+        server = context.message.server
+        data = fileIO(self.data_file, 'load')
+        mes = str(context.message.content)[1:]
+        if mes == "played all":
+            limit = 30
+            finalMsg = '```30 Jogos mais jogados no servidor: {}\n\n'.format(server.name)
+        else:
+            limit = 10
+            finalMsg = '```10 Jogos mais jogados no servidor: {}\n\n'.format(server.name)
+
+        if server.id in data:
+            data = data[server.id]
+
+            games_played = sorted(data, key=lambda x: (data[x]['MINUTES']), reverse=True)
+            i = 0
+            for game in games_played:
+                if i < limit:
+                    gamestr = str(game)
+
+                    time = data[game]['MINUTES']
+                    timeLast = data[game]['LASTPLAY']
+                    if time > 60:
+                        hours = int(time/60)
+                        minutes = time % 60
+                        msg = '{:<5}{}: {} horas e {} minutos.'.format(i+1, gamestr, str(hours), str(minutes))
+
+                        diff = get_change(time, timeLast)
+                        if diff > 0.05:
+                            msg += ' (+{}%)'.format(str(format(get_change(time, timeLast), '.2f')))
+                    else:
+                        minutes = time
+                        msg = '{:<5}{}: {} minutos.'.format(i+1, gamestr, str(minutes))
+
+                        diff = get_change(time, timeLast)
+                        if diff > 0.05:
+                            msg += ' (+{}%)'.format(str(format(get_change(time, timeLast), '.2f')))
+
+                    msg += '\n'
+                    finalMsg += msg
+                    i += 1
+            finalMsg += ' ```'
+            # self.save_last(server)
+            await self.bot.say(finalMsg)
+
+    def save_last(self, server):
+        data = fileIO(self.data_file, 'load')
+
+        if server.id in data:
+            for game in data[server.id]['GAMES']:
+                data[server.id]['GAMES'][game]['LASTPLAY'] = data[server.id]['GAMES'][game]['MINUTES']
+
+        fileIO(self.data_file, 'save', data)
+
+def get_change(current, previous):
+    if current == previous:
+        return 0
+    try:
+       return ((current-previous)/previous)*100
+    except ZeroDivisionError:
+        return 0
 
 def check_folder():
     if not os.path.exists('data/played2'):
