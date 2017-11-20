@@ -111,10 +111,12 @@ class Played2:
 def sort_games(data):
     games_unsorted = None
     for member in data:
-        for game, i in member[0]:
+        for game in member:
+            i= 0
             games_unsorted[i]['GAME'] += game['GAME']
             games_unsorted[i]['LASTPLAY'] += game['LASTPLAY']
             games_unsorted[i]['MINUTES'] += game['MINUTES']
+            i+= 1
     return games_unsorted
 
 def get_change(current, previous):
