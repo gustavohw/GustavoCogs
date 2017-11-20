@@ -1,4 +1,5 @@
 import os
+import json
 from discord.ext import commands
 from .utils.dataIO import fileIO
 from difflib import SequenceMatcher
@@ -64,9 +65,12 @@ class Played2:
 
         if server.id in data:
             data = data[server.id]
-            games_unsorted = sort_games(data)
 
-            games_played = sorted(games_unsorted, key=lambda x: (games_unsorted[x]['MINUTES']), reverse=True)
+            await self.bot.say(json.loads(data))
+
+            games_sorted = sort_games(data)
+
+            games_played = sorted(games_sorted, key=lambda x: (games_sorted[x]['MINUTES']), reverse=True)
             i = 0
             for game in games_played:
                 if i < limit:
