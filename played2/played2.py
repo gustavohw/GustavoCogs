@@ -66,11 +66,13 @@ class Played2:
         if server.id in data:
             data = data[server.id]
 
-            await self.bot.say(json.loads(data))
+            j = str(json.loads(data))
 
-            games_sorted = sort_games(data)
+            await self.bot.say(j)
 
-            games_played = sorted(games_sorted, key=lambda x: (games_sorted[x]['MINUTES']), reverse=True)
+            # games_sorted = sort_games(data)
+
+            # games_played = sorted(games_sorted, key=lambda x: (games_sorted[x]['MINUTES']), reverse=True)
             i = 0
             for game in games_played:
                 if i < limit:
