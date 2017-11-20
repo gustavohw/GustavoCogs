@@ -65,7 +65,9 @@ class Played2:
         if server.id in data:
             data = data[server.id]
 
-            games_played = sorted(data, key=lambda x: (data[x]['MINUTES']), reverse=True)
+            games_unsorted = sort_games(data)
+
+            games_played = sorted(games_unsorted, key=lambda x: (games_unsorted[x]['MINUTES']), reverse=True)
             i = 0
             for game in games_played:
                 if i < limit:
@@ -104,6 +106,19 @@ class Played2:
                 data[server.id]['GAMES'][game]['LASTPLAY'] = data[server.id]['GAMES'][game]['MINUTES']
 
         fileIO(self.data_file, 'save', data)
+
+
+def sort_games(data):
+    games_unsorted = None
+    if data is not None:
+        for m in data:
+            for g in m['GAMES']:
+                games_unsorted['GAME'] += g['GAME']
+                games_unsorted['LASTPLAY'] += g['LASTPLAY']
+                games_unsorted['MINUTES'] += g['MINUTES']
+        return games_unsorted
+    else:
+        return None
 
 def get_change(current, previous):
     if current == previous:
