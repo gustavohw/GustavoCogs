@@ -73,7 +73,7 @@ class Played:
                         minutesLast = timeLast % 60
 
                         final_sum_hours = hours - hoursLast
-                        final_sum_minutes = minutes - minutesLast
+                        final_sum_minutes = fix_modulo(minutes - minutesLast)
 
                         msg = '{:<5}{}: {} horas e {} minutos.'.format(i+1, gamestr, str(hours), str(minutes))
 
@@ -83,7 +83,7 @@ class Played:
                     else:
                         minutes = time
                         minutesLast = timeLast % 60
-                        final_sum_minutes = minutes - minutesLast
+                        final_sum_minutes = fix_modulo(minutes - minutesLast)
 
                         msg = '{:<5}{}: {} minutos.'.format(i+1, gamestr, str(minutes))
 
@@ -115,6 +115,10 @@ def get_change(current, previous):
        return ((current-previous)/previous)*100
     except ZeroDivisionError:
         return 0
+
+def fix_modulo(value):
+    if value < 0:
+        return value*-1
 
 def check_folder():
     if not os.path.exists('data/played'):
