@@ -73,7 +73,7 @@ class Played:
                         minutesLast = timeLast % 60
 
                         final_sum_hours = hours - hoursLast
-                        final_sum_minutes = fix_modulo(minutes - minutesLast)
+                        final_sum_minutes = minutes - minutesLast
 
                         msg = '{:<5}{}: {} horas e {} minutos.'.format(i+1, gamestr, str(hours), str(minutes))
 
@@ -83,13 +83,12 @@ class Played:
                     else:
                         minutes = time
                         minutesLast = timeLast % 60
-                        final_sum_minutes = fix_modulo(minutes - minutesLast)
+                        final_sum_minutes = minutes - minutesLast
 
                         msg = '{:<5}{}: {} minutos.'.format(i+1, gamestr, str(minutes))
 
                         diff = get_change(time, timeLast)
                         if diff > 0.05:
-                            minutes = time
                             msg += ' (+{} minutos/+{}%)'.format(str(final_sum_minutes), str(format(get_change(time, timeLast), '.2f')))
 
                     msg += '\n'
