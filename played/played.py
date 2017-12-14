@@ -73,7 +73,7 @@ class Played:
                         minutesLast = timeLast % 60
 
                         final_sum_hours = hours - hoursLast
-                        final_sum_minutes = minutes - minutesLast
+                        final_sum_minutes = ((time - timeLast) % 60)
 
                         msg = '{:<5}{}: {} horas e {} minutos.'.format(i+1, gamestr, str(hours), str(minutes))
 
@@ -82,8 +82,8 @@ class Played:
                             msg += ' (+{}h:{}m/+{}%)'.format(str(final_sum_hours), str(final_sum_minutes), str(format(get_change(time, timeLast), '.2f')))
                     else:
                         minutes = time
-                        minutesLast = timeLast % 60
-                        final_sum_minutes = minutes - minutesLast
+                        minutesLast = timeLast
+                        final_sum_minutes = ((time - timeLast) % 60)
 
                         msg = '{:<5}{}: {} minutos.'.format(i+1, gamestr, str(minutes))
 
