@@ -112,10 +112,13 @@ class Played2:
 def sort_games(data):
     games_sorted = {}
     for member in data:
-        for game in member['GAMES']:
-            games_sorted[game['GAME']] = {}
-            games_sorted[game['GAME']]['LASTPLAY'] = game['LASTPLAY']
-            games_sorted[game['GAME']]['MINUTES'] = game['MINUTES']
+        games_played = sorted(member['GAMES'], key=lambda x: (member[x]['MINUTES']), reverse=True)
+        for game in games_played:
+            gamestr = str(game)
+            games_sorted[gamestr] = {}
+            games_sorted[gamestr]['GAMENAME'] = game['GAME']
+            games_sorted[gamestr]['LASTPLAY'] = game['LASTPLAY']
+            games_sorted[gamestr]['MINUTES'] = game['MINUTES']
     return games_sorted
 
 def get_change(current, previous):
