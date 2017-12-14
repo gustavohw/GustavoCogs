@@ -66,7 +66,7 @@ class Played2:
         if server.id in data:
             data = data[server.id]
             games_sorted = sort_games(data)
-            await self.bot.say(games_sorted)
+            await self.bot.say(str(games_sorted))
 
             # games_played = sorted(games_sorted, key=lambda x: (games_sorted[x]['MINUTES']), reverse=True)
             # i = 0
@@ -110,17 +110,13 @@ class Played2:
 
 
 def sort_games(data):
-    games_unsorted = None
-    d = data
-    msg = None
-    for member in d:
-        msg += str(member)
-        msg += '\n'
-        # for game in member:
-        #     games_unsorted['GAME'] += game['GAME']
-        #     games_unsorted['LASTPLAY'] += game['LASTPLAY']
-        #     games_unsorted['MINUTES'] += game['MINUTES']
-    return msg
+    games_sorted = None
+    for member in data:
+        for game in member:
+            games_sorted[game['GAME']] = {}
+            games_sorted[game['GAME']]['LASTPLAY'] = game['LASTPLAY']
+            games_sorted[game['GAME']]['MINUTES'] = game['MINUTES']
+    return games_sorted
 
 def get_change(current, previous):
     if current == previous:
