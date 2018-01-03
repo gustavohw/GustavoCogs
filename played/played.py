@@ -103,7 +103,9 @@ class Played:
                     msg += '\n'
                     finalMsg += msg
                     i += 1
-            finalMsg += '\nForam jogados totais de <{}h {}m> nessa semana!'.format(str(total_played_hours), str(total_played_minutes))
+            final_played_hours = (total_played_hours + int(total_played_minutes/60))
+            final_played_minutes = total_played_minutes % 60
+            finalMsg += '\nForam jogados totais de <{}h {}m> nessa semana!'.format(str(final_played_hours), str(final_played_minutes))
             finalMsg += ' ```'
             self.save_last(server)
             await self.bot.say(finalMsg)
@@ -142,10 +144,6 @@ def save_weekly_epoch():
     epoch = data['INFO']['EPOCH']
     if check_weekly(epoch) is True:
         data['INFO']['EPOCH'] = int(time.time())
-
-def fix_modulo(value):
-    if value < 0:
-        return value*-1
 
 def check_folder():
     if not os.path.exists('data/played'):
