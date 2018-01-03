@@ -50,12 +50,13 @@ class Played:
         data = fileIO(self.data_file, 'load')
         saved_epoch = data['INFO']['EPOCH']
         mes = str(context.message.content)[1:]
+        prefix = '```Markdown\n'
         if mes == "played all":
             limit = 30
-            finalMsg = '```30 Jogos mais jogados no servidor: {} desde {}\n\n'.format(server.name, epoch_converter(saved_epoch))
+            finalMsg = prefix + '30 Jogos mais jogados no servidor: {} desde {}\n\n'.format(server.name, epoch_converter(saved_epoch))
         else:
             limit = 10
-            finalMsg = '```10 Jogos mais jogados no servidor: {} desde {}\n\n'.format(server.name, epoch_converter(saved_epoch))
+            finalMsg = prefix + '10 Jogos mais jogados no servidor: {} desde {}\n\n'.format(server.name, epoch_converter(saved_epoch))
 
         if server.id in data:
             data = data[server.id]['GAMES']
@@ -78,7 +79,7 @@ class Played:
                         final_sum_hours = hours - hoursLast
                         final_sum_minutes = ((time - timeLast) % 60)
 
-                        msg = '{:.<5}{}: {} horas e {} minutos.'.format(i+1, gamestr, str(hours), str(minutes))
+                        msg = '{.:<5}{}: {} horas e {} minutos.'.format(i+1, gamestr, str(hours), str(minutes))
 
                         diff = get_change(time, timeLast)
                         if diff > 0.05:
@@ -88,7 +89,7 @@ class Played:
                         minutesLast = timeLast
                         final_sum_minutes = ((time - timeLast) % 60)
 
-                        msg = '{:<5}{}: {} minutos.'.format(i+1, gamestr, str(minutes))
+                        msg = '{.:<5}{}: {} minutos.'.format(i+1, gamestr, str(minutes))
 
                         diff = get_change(time, timeLast)
                         if diff > 0.05:
