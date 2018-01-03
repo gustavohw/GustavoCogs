@@ -53,16 +53,18 @@ class Played:
         prefix = '```Markdown\n'
         if mes == "played all":
             limit = 30
-            finalMsg = prefix + '30 Jogos mais jogados no servidor: {} desde "{}"\n\n'.format(server.name, epoch_converter(saved_epoch))
+            finalMsg = prefix + '30 Jogos mais jogados no servidor: {} desde {}\n\n'.format(server.name, epoch_converter(saved_epoch))
         else:
             limit = 10
-            finalMsg = prefix + '10 Jogos mais jogados no servidor: {} desde "{}"\n\n'.format(server.name, epoch_converter(saved_epoch))
+            finalMsg = prefix + '10 Jogos mais jogados no servidor: {} desde {}\n\n'.format(server.name, epoch_converter(saved_epoch))
 
         if server.id in data:
             data = data[server.id]['GAMES']
 
             games_played = sorted(data, key=lambda x: (data[x]['MINUTES']), reverse=True)
             i = 1
+            total_played_hours = 0
+            total_played_minutes = 0
             for game in games_played:
                 if i < limit:
                     gamestr = str(game)
@@ -78,6 +80,8 @@ class Played:
 
                         final_sum_hours = hours - hoursLast
                         final_sum_minutes = ((time - timeLast) % 60)
+                        total_played_hours += final_sum_hours
+                        total_played_minutes += final_sum_minutes
 
                         msg = '{:<5}{}: {} horas e {} minutos.'.format(index, gamestr, str(hours), str(minutes))
 
@@ -88,6 +92,7 @@ class Played:
                         minutes = time
                         minutesLast = timeLast
                         final_sum_minutes = ((time - timeLast) % 60)
+                        total_played_minutes += final_sum_minutes
 
                         msg = '{:<5}{}: {} minutos.'.format(index, gamestr, str(minutes))
 
@@ -98,6 +103,7 @@ class Played:
                     msg += '\n'
                     finalMsg += msg
                     i += 1
+            finalMsg += 'Foram jogadas totais de {} horas e {} minutos nessa semana!'.format(str(total_played_hours), str(total_played_minutes))
             finalMsg += ' ```'
             self.save_last(server)
             await self.bot.say(finalMsg)
