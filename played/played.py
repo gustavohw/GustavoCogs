@@ -53,20 +53,20 @@ class Played:
         prefix = '```Markdown\n'
         if mes == "played all":
             limit = 30
-            finalMsg = prefix + '30 Jogos mais jogados no servidor: {} desde {}\n\n'.format(server.name, epoch_converter(saved_epoch))
+            finalMsg = prefix + '30 Jogos mais jogados no servidor: {} desde *{}*\n\n'.format(server.name, epoch_converter(saved_epoch))
         else:
             limit = 10
-            finalMsg = prefix + '10 Jogos mais jogados no servidor: {} desde {}\n\n'.format(server.name, epoch_converter(saved_epoch))
+            finalMsg = prefix + '10 Jogos mais jogados no servidor: {} desde *{}*\n\n'.format(server.name, epoch_converter(saved_epoch))
 
         if server.id in data:
             data = data[server.id]['GAMES']
 
             games_played = sorted(data, key=lambda x: (data[x]['MINUTES']), reverse=True)
-            i = 0
+            i = 1
             for game in games_played:
                 if i < limit:
                     gamestr = str(game)
-
+                    index = str(i) + '.'
                     time = data[game]['MINUTES']
                     timeLast = data[game]['LASTPLAY']
                     if time > 60:
@@ -79,7 +79,7 @@ class Played:
                         final_sum_hours = hours - hoursLast
                         final_sum_minutes = ((time - timeLast) % 60)
 
-                        msg = '{:<5}{}: {} horas e {} minutos.'.format(i+1, gamestr, str(hours), str(minutes))
+                        msg = '{:<5}{}: {} horas e {} minutos.'.format(index, gamestr, str(hours), str(minutes))
 
                         diff = get_change(time, timeLast)
                         if diff > 0.05:
@@ -89,7 +89,7 @@ class Played:
                         minutesLast = timeLast
                         final_sum_minutes = ((time - timeLast) % 60)
 
-                        msg = '{:<5}{}: {} minutos.'.format(i+1, gamestr, str(minutes))
+                        msg = '{:<5}{}: {} minutos.'.format(index, gamestr, str(minutes))
 
                         diff = get_change(time, timeLast)
                         if diff > 0.05:
