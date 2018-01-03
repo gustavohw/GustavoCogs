@@ -103,7 +103,7 @@ class Played:
                     msg += '\n'
                     finalMsg += msg
                     i += 1
-            finalMsg += '\nForam jogados totais de <{} horas e {} minutos> nessa semana!'.format(str(total_played_hours), str(total_played_minutes))
+            finalMsg += '\nForam jogados totais de <{} horas> e <{} minutos> nessa semana!'.format(str(total_played_hours), str(total_played_minutes))
             finalMsg += ' ```'
             self.save_last(server)
             await self.bot.say(finalMsg)
