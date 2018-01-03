@@ -124,7 +124,7 @@ def epoch_converter(epoch):
 
 def check_weekly(epoch):
     epoch_week = 604800
-    if epoch > (epoch + epoch_week):
+    if int(time.time()) > (epoch + epoch_week):
         return True
     else:
         return False
@@ -135,7 +135,6 @@ def save_weekly_epoch():
     epoch = data['INFO']['EPOCH']
     if check_weekly(epoch) is True:
         data['INFO']['EPOCH'] = int(time.time())
-
 
 def fix_modulo(value):
     if value < 0:
