@@ -2,6 +2,8 @@ import os
 from discord.ext import commands
 from .utils.dataIO import fileIO
 from difflib import SequenceMatcher
+import time
+
 
 class Played:
     def __init__(self, bot):
@@ -46,13 +48,14 @@ class Played:
         """Shows playtime per game."""
         server = context.message.server
         data = fileIO(self.data_file, 'load')
+        saved_epoch = data['INFO']['EPOCH']
         mes = str(context.message.content)[1:]
         if mes == "played all":
             limit = 30
-            finalMsg = '```30 Jogos mais jogados no servidor: {}\n\n'.format(server.name)
+            finalMsg = '```30 Jogos mais jogados no servidor: {} desde {}\n\n'.format(server.name, epoch_converter(saved_epoch))
         else:
             limit = 10
-            finalMsg = '```10 Jogos mais jogados no servidor: {}\n\n'.format(server.name)
+            finalMsg = '```10 Jogos mais jogados no servidor: {} desde {}\n\n'.format(server.name, epoch_converter(saved_epoch))
 
         if server.id in data:
             data = data[server.id]['GAMES']
@@ -100,12 +103,13 @@ class Played:
 
     def save_last(self, server):
         data = fileIO(self.data_file, 'load')
+        saved_epoch = data['INFO']['EPOCH']
+        if check_weekly(saved_epoch):
+            if server.id in data:
+                for game in data[server.id]['GAMES']:
+                    data[server.id]['GAMES'][game]['LASTPLAY'] = data[server.id]['GAMES'][game]['MINUTES']
 
-        if server.id in data:
-            for game in data[server.id]['GAMES']:
-                data[server.id]['GAMES'][game]['LASTPLAY'] = data[server.id]['GAMES'][game]['MINUTES']
-
-        fileIO(self.data_file, 'save', data)
+            fileIO(self.data_file, 'save', data)
 
 def get_change(current, previous):
     if current == previous:
@@ -114,6 +118,24 @@ def get_change(current, previous):
        return ((current-previous)/previous)*100
     except ZeroDivisionError:
         return 0
+
+def epoch_converter(epoch):
+    return time.strftime('%d-%m-%Y', time.localtime(epoch))
+
+def check_weekly(epoch):
+    epoch_week = 604800
+    if epoch > (epoch + epoch_week):
+        return True
+    else:
+        return False
+
+def save_weekly_epoch():
+    data_file = 'data/played/played.json'
+    data = fileIO(data_file, 'load')
+    epoch = data['INFO']['EPOCH']
+    if check_weekly(epoch) is True:
+        data['INFO']['EPOCH'] = int(time.time())
+
 
 def fix_modulo(value):
     if value < 0:
