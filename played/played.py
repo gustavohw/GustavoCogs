@@ -105,7 +105,7 @@ class Played:
                     i += 1
             final_played_hours = (total_played_hours + int(total_played_minutes/60))
             final_played_minutes = total_played_minutes % 60
-            finalMsg += '\nForam jogados totais de <{}h {}m> nessa semana!'.format(str(final_played_hours), str(final_played_minutes))
+            finalMsg += '\nForam jogados totais de <{}h:{}m> nessa semana!'.format(str(final_played_hours), str(final_played_minutes))
             finalMsg += ' ```'
             self.save_last(server)
             await self.bot.say(finalMsg)
