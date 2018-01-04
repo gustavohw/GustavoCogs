@@ -66,7 +66,7 @@ class Played:
             total_played_hours = 0
             total_played_minutes = 0
             for game in games_played:
-                if i < limit:
+                if i < limit+1:
                     gamestr = str(game)
                     index = str(i) + '.'
                     time = data[game]['MINUTES']
