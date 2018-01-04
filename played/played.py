@@ -56,7 +56,7 @@ class Played:
             finalMsg = prefix + '30 Jogos mais jogados no servidor: {} <{}>\n\n'.format(server.name, epoch_converter(saved_epoch))
         else:
             limit = 10
-            finalMsg = prefix + '10 Jogos mais jogados no servidor: {} <{} -> {}>\n\n'.format(server.name, epoch_converter(saved_epoch), epoch_converter_next_week(saved_epoch))
+            finalMsg = prefix + '10 Jogos mais jogados no servidor: {} <{} → {}>\n\n'.format(server.name, epoch_converter(saved_epoch), epoch_converter_next_week(saved_epoch))
 
         if server.id in data:
             data = data[server.id]['GAMES']
