@@ -27,6 +27,7 @@ class Played:
                     if server.id not in data:
                         data[server.id] = {}
                         data[server.id]['GAMES'] = {}
+                        data[server.id]['HISTORY'] = {}
                     game_match = ''
                     for game in data[server.id]['GAMES']:
                         if self.match(str(game).upper(), after_game.upper()) > 0.89 and self.match(str(game).upper(),after_game.upper()) < 1.0:
@@ -53,7 +54,7 @@ class Played:
         prefix = '```Markdown\n'
         if mes == "played all":
             limit = 30
-            finalMsg = prefix + '30 Jogos mais jogados no servidor: {} <{}>\n\n'.format(server.name, epoch_converter(saved_epoch))
+            finalMsg = prefix + '30 Jogos mais jogados no servidor: {} <{} → {}>\n\n'.format(server.name, epoch_converter(saved_epoch), epoch_converter_next_week(saved_epoch))
         else:
             limit = 10
             finalMsg = prefix + '10 Jogos mais jogados no servidor: {} <{} → {}>\n\n'.format(server.name, epoch_converter(saved_epoch), epoch_converter_next_week(saved_epoch))
@@ -103,9 +104,15 @@ class Played:
                     msg += '\n'
                     finalMsg += msg
                     i += 1
-            final_played_hours = (total_played_hours + int(total_played_minutes/60))
-            final_played_minutes = total_played_minutes % 60
-            finalMsg += '\nForam jogados totais de <{}h:{}m> nessa semana!'.format(str(final_played_hours), str(final_played_minutes))
+
+            minutes_played = self.get_weekly_time(server)
+            weekly_hours = int(minutes_played / 60)
+            weekly_minutes = minutes_played % 60
+
+            #final_played_hours = (total_played_hours + int(total_played_minutes/60))
+            #final_played_minutes = total_played_minutes % 60
+
+            finalMsg += '\nForam jogados totais de <{}h:{}m> nessa semana!'.format(str(weekly_hours), str(weekly_minutes))
             finalMsg += ' ```'
             self.save_last(server)
             await self.bot.say(finalMsg)
@@ -113,12 +120,32 @@ class Played:
     def save_last(self, server):
         data = fileIO(self.data_file, 'load')
         saved_epoch = data['INFO']['EPOCH']
+        weekly_total = None
         if check_weekly(saved_epoch):
             if server.id in data:
                 for game in data[server.id]['GAMES']:
                     data[server.id]['GAMES'][game]['LASTPLAY'] = data[server.id]['GAMES'][game]['MINUTES']
+                    weekly_total += (data[server.id]['GAMES'][game]['MINUTES'] - data[server.id]['GAMES'][game]['LASTPLAY'])
+
+                data[server.id]['HISTORY'][str(saved_epoch)] = {}
+                data[server.id]['HISTORY'][str(saved_epoch)]['TIME'] = weekly_total
 
             fileIO(self.data_file, 'save', data)
+
+    def get_weekly_time(self, server):
+        data = fileIO(self.data_file, 'load')
+        if server.id in data:
+            data = data[server.id]['GAMES']
+
+            games_played = sorted(data, key=lambda x: (data[x]['MINUTES']), reverse=True)
+            total_played_minutes = 0
+            for game in games_played:
+                time = data[game]['MINUTES']
+                timeLast = data[game]['LASTPLAY']
+                total_played_minutes += (time - timeLast)
+
+            return total_played_minutes
+
 
 def get_change(current, previous):
     if current == previous:
