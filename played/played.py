@@ -14,6 +14,7 @@ class Played:
         return SequenceMatcher(None, a, b).ratio()
 
     # TODO: Adicionar hook pra pegar @menção e fazer mais uma key em baixo do Game pra conter Nome : Tempo
+    @commands.group(no_pm=True, pass_context=True)
     @commands.command(pass_context=True, no_pm=True, name='getPlayTime')
     async def _getPlayTime(self, context):
         """Schedule this per 1 minute basis."""
@@ -44,7 +45,25 @@ class Played:
 
         fileIO(self.data_file, 'save', data)
 
-    @commands.command(pass_context=True, no_pm=True, name='played')
+    @played.command(pass_context=True, name='history')
+    async def _played_history(self, ctx):
+        """Shows weekly played times."""
+        server = ctx.message.server
+        data = fileIO(self.data_file, 'load')
+        prefix = '```Markdown\n'
+        msg = None
+        if server.id in data:
+            data = data[server.id]['HISTORY']
+            times = sorted(data, key=lambda x: (data[x]['TIME']), reverse=True)
+            for time in times:
+                minutes = time % 60
+                hours = int(time / 60)
+                msg += prefix + 'Na semana {} foram jogados {}h:{}m\n'.format(epoch_converter(time['EPOCH']), str(hours), str(minutes))
+
+            msg += ' ```'
+            await self.bot.say(msg)
+
+    @played.command(pass_context=True, no_pm=True, name='played')
     async def _played(self, context):
         """Shows playtime per game."""
         server = context.message.server
@@ -139,23 +158,6 @@ class Played:
 
             return total_played_minutes
 
-    @played.command(pass_context=True, name='history')
-    async def _played_history(self, ctx):
-        """Shows weekly played times."""
-        server = ctx.message.server
-        data = fileIO(self.data_file, 'load')
-        prefix = '```Markdown\n'
-        msg = None
-        if server.id in data:
-            data = data[server.id]['HISTORY']
-            times = sorted(data, key=lambda x: (data[x]['TIME']), reverse=True)
-            for time in times:
-                minutes = time % 60
-                hours = int(time / 60)
-                msg += 'Na semana {} foram jogados {}h:{}m\n'.format(epoch_converter(time['EPOCH']), str(hours), str(minutes))
-
-            msg += ' ```'
-            await self.bot.say(msg)
 
 def get_change(current, previous):
     if current == previous:
