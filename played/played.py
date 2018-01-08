@@ -127,6 +127,7 @@ class Played:
                     minutes = t % 60
                     hours = int(t / 60)
                     msg += '{:<3} <{} → {}h:{}m>\n'.format(index, str(epoch_converter(data[epoch]['EPOCH'])), str(hours), str(minutes))
+                    i += 1
 
             msg += ' ```'
             await self.bot.say(msg)
