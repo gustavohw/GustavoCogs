@@ -123,8 +123,7 @@ class Played:
                 t = data[epoch]['TIME']
                 minutes = t % 60
                 hours = int(t / 60)
-                msg += str(minutes)
-                msg += prefix + 'Na semana {} foram jogados {}h:{}m\n'.format(str(epoch_converter(data[epoch]['EPOCH'])), str(hours), str(minutes))
+                msg += 'Na semana {} foram jogados {}h:{}m\n'.format(str(epoch_converter(data[epoch]['EPOCH'])), str(hours), str(minutes))
 
             msg += ' ```'
             await self.bot.say(msg)
