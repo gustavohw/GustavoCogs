@@ -119,11 +119,14 @@ class Played:
         if server.id in data:
             data = data[server.id]['HISTORY']
             epochs = sorted(data, key=lambda x: (data[x]['EPOCH']), reverse=True)
+            i = 1
             for epoch in epochs:
-                t = data[epoch]['TIME']
-                minutes = t % 60
-                hours = int(t / 60)
-                msg += 'Na semana <{}> foram jogados <{}h:{}m>\n'.format(str(epoch_converter(data[epoch]['EPOCH'])), str(hours), str(minutes))
+                if i < 10:
+                    index = str(i) + '.'
+                    t = data[epoch]['TIME']
+                    minutes = t % 60
+                    hours = int(t / 60)
+                    msg += '{:<5} Na semana <{}> foram jogados <{}h:{}m>\n'.format(index, str(epoch_converter(data[epoch]['EPOCH'])), str(hours), str(minutes))
 
             msg += ' ```'
             await self.bot.say(msg)
