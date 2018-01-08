@@ -140,9 +140,9 @@ class Played:
             return total_played_minutes
 
     @commands.command(pass_context=True, no_pm=True, name='history')
-    async def _played_history(self, context):
+    async def _played_history(self, ctx):
         """Shows weekly played times."""
-        server = context.message.server
+        server = ctx.message.server
         data = fileIO(self.data_file, 'load')
         prefix = '```Markdown\n'
         msg = None
