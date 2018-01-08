@@ -57,49 +57,41 @@ class Played2:
         server = context.message.server
         data = fileIO(self.data_file, 'load')
         author = username
-        await self.bot.say(str(author.id))
-        if mes == "played all":
-            limit = 30
-            finalMsg = '```30 Jogos mais jogados no servidor: {}\n\n'.format(server.name)
-        else:
-            limit = 10
-            finalMsg = '```10 Jogos mais jogados no servidor: {}\n\n'.format(server.name)
+        finalMsg = '```Jogos mais jogados por {} no servidor: {}\n\n'.format(author.display_name, server.name)
 
-        # if server.id in data:
-        #     data = data[server.id]
-        #     games_sorted = sort_games(data)
-        #     await self.bot.say(str(games_sorted))
+        if server.id in data:
+            data = data[server.id][author.id]['GAMES']
 
-            # games_played = sorted(games_sorted, key=lambda x: (games_sorted[x]['MINUTES']), reverse=True)
-            # i = 0
-            # for game in games_played:
-            #     if i < limit:
-            #         gamestr = str(game)
-            #
-            #         time = data[game]['MINUTES']
-            #         timeLast = data[game]['LASTPLAY']
-            #         if time > 60:
-            #             hours = int(time/60)
-            #             minutes = time % 60
-            #             msg = '{:<5}{}: {} horas e {} minutos.'.format(i+1, gamestr, str(hours), str(minutes))
-            #
-            #             diff = get_change(time, timeLast)
-            #             if diff > 0.05:
-            #                 msg += ' (+{}%)'.format(str(format(get_change(time, timeLast), '.2f')))
-            #         else:
-            #             minutes = time
-            #             msg = '{:<5}{}: {} minutos.'.format(i+1, gamestr, str(minutes))
-            #
-            #             diff = get_change(time, timeLast)
-            #             if diff > 0.05:
-            #                 msg += ' (+{}%)'.format(str(format(get_change(time, timeLast), '.2f')))
-            #
-            #         msg += '\n'
-            #         finalMsg += msg
-            #         i += 1
-            # finalMsg += ' ```'
-            # # self.save_last(server)
-            # await self.bot.say(finalMsg)
+            games_played = sorted(data, key=lambda x: (data[x]['MINUTES']), reverse=True)
+            i = 1
+            for game in games_played:
+                if i <= 10:
+                    gamestr = str(game)
+
+                    time = data[game]['MINUTES']
+                    timeLast = data[game]['LASTPLAY']
+                    if time > 60:
+                        hours = int(time/60)
+                        minutes = time % 60
+                        msg = '{:<5}{}: {} horas e {} minutos.'.format(i+1, gamestr, str(hours), str(minutes))
+
+                        diff = get_change(time, timeLast)
+                        if diff > 0.05:
+                            msg += ' (+{}%)'.format(str(format(get_change(time, timeLast), '.2f')))
+                    else:
+                        minutes = time
+                        msg = '{:<5}{}: {} minutos.'.format(i+1, gamestr, str(minutes))
+
+                        diff = get_change(time, timeLast)
+                        if diff > 0.05:
+                            msg += ' (+{}%)'.format(str(format(get_change(time, timeLast), '.2f')))
+
+                    msg += '\n'
+                    finalMsg += msg
+                    i += 1
+            finalMsg += ' ```'
+            # self.save_last(server)
+            await self.bot.say(finalMsg)
 
     def save_last(self, server):
         data = fileIO(self.data_file, 'load')
