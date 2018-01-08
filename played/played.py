@@ -64,8 +64,6 @@ class Played:
 
             games_played = sorted(data, key=lambda x: (data[x]['MINUTES']), reverse=True)
             i = 1
-            total_played_hours = 0
-            total_played_minutes = 0
             for game in games_played:
                 if i < limit+1:
                     gamestr = str(game)
@@ -81,8 +79,6 @@ class Played:
 
                         final_sum_hours = hours - hoursLast
                         final_sum_minutes = ((time - timeLast) % 60)
-                        total_played_hours += final_sum_hours
-                        total_played_minutes += final_sum_minutes
 
                         msg = '{:<5}{}: {} horas e {} minutos.'.format(index, gamestr, str(hours), str(minutes))
 
@@ -93,7 +89,6 @@ class Played:
                         minutes = time
                         minutesLast = timeLast
                         final_sum_minutes = ((time - timeLast) % 60)
-                        total_played_minutes += final_sum_minutes
 
                         msg = '{:<5}{}: {} minutos.'.format(index, gamestr, str(minutes))
 
@@ -108,9 +103,6 @@ class Played:
             minutes_played = self.get_weekly_time(server)
             weekly_hours = int(minutes_played / 60)
             weekly_minutes = minutes_played % 60
-
-            #final_played_hours = (total_played_hours + int(total_played_minutes/60))
-            #final_played_minutes = total_played_minutes % 60
 
             finalMsg += '\nForam jogados totais de <{}h:{}m> nessa semana!'.format(str(weekly_hours), str(weekly_minutes))
             finalMsg += ' ```'
@@ -128,6 +120,7 @@ class Played:
                     weekly_total += (data[server.id]['GAMES'][game]['MINUTES'] - data[server.id]['GAMES'][game]['LASTPLAY'])
 
                 data[server.id]['HISTORY'][str(saved_epoch)] = {}
+                data[server.id]['HISTORY'][str(saved_epoch)]['EPOCH'] = saved_epoch
                 data[server.id]['HISTORY'][str(saved_epoch)]['TIME'] = weekly_total
 
             fileIO(self.data_file, 'save', data)
@@ -146,6 +139,23 @@ class Played:
 
             return total_played_minutes
 
+    @commands.command(pass_context=True, no_pm=True, name='history')
+    async def _played_history(self, context):
+        """Shows weekly played times."""
+        server = context.message.server
+        data = fileIO(self.data_file, 'load')
+        prefix = '```Markdown\n'
+        msg = None
+        if server.id in data:
+            data = data[server.id]['HISTORY']
+            times = sorted(data, key=lambda x: (data[x]['TIME']), reverse=True)
+            for time in times:
+                minutes = time % 60
+                hours = int(time / 60)
+                msg += 'Na semana {} foram jogados {}h:{}m\n'.format(epoch_converter(time['EPOCH']), str(hours), str(minutes))
+
+            msg += ' ```'
+            await self.bot.say(msg)
 
 def get_change(current, previous):
     if current == previous:
