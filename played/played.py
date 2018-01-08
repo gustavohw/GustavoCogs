@@ -125,8 +125,8 @@ class Played:
                 hours = int(t / 60)
                 #msg += prefix + 'Na semana {} foram jogados {}h:{}m\n'.format(str(epoch_converter(time['EPOCH'])), str(hours), str(minutes))
 
-            msg += ' ```'
-            await self.bot.say(msg)
+            #msg += ' ```'
+            await self.bot.say('teste')
 
     def save_last(self, server):
         data = fileIO(self.data_file, 'load')
