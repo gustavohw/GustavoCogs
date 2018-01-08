@@ -64,9 +64,9 @@ class Played2:
                 data = data[server.id][author.id]['GAMES']
 
                 games_played = sorted(data, key=lambda x: (data[x]['MINUTES']), reverse=True)
-                i = 1
+                i = 0
                 for game in games_played:
-                    if i <= 10:
+                    if i < 10:
                         gamestr = str(game)
 
                         time = data[game]['MINUTES']
