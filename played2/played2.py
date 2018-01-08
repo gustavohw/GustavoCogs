@@ -91,20 +91,21 @@ class Played2:
                         finalMsg += msg
                         i += 1
                 finalMsg += ' ```'
-                # self.save_last(server)
+                self.save_last(server, author.id)
                 await self.bot.say(finalMsg)
             else:
                 finalMsg = '``{} no servidor: {} ainda não está no banco de dados.``'.format(author.display_name, server.name)
                 await self.bot.say(finalMsg)
 
-    def save_last(self, server):
+    def save_last(self, server, player_id):
         data = fileIO(self.data_file, 'load')
 
         if server.id in data:
-            for game in data[server.id]['GAMES']:
-                data[server.id]['GAMES'][game]['LASTPLAY'] = data[server.id]['GAMES'][game]['MINUTES']
+            if player_id in data[server.id]:
+                for game in data[server.id][player_id]['GAMES']:
+                    data[server.id][player_id]['GAMES'][game]['LASTPLAY'] = data[server.id][player_id]['GAMES'][game]['MINUTES']
 
-        fileIO(self.data_file, 'save', data)
+                fileIO(self.data_file, 'save', data)
 
 
 def sort_games(data):
