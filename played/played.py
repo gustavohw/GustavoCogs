@@ -110,7 +110,7 @@ class Played:
             await self.bot.say(finalMsg)
 
     @commands.command(pass_context=True, no_pm=True, name='history')
-    def _history(self, ctx):
+    async def _history(self, ctx):
         """Shows weekly played times."""
         server = ctx.message.server
         data = fileIO(self.data_file, 'load')
