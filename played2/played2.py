@@ -57,11 +57,11 @@ class Played2:
         server = context.message.server
         data = fileIO(self.data_file, 'load')
         author = username
-        finalMsg = '```Jogos mais jogados por {} no servidor: {}\n\n'.format(author.name, server.name)
+        finalMsg = '```Jogos mais jogados por {} no servidor: {}\n\n'.format(username.display_name, server.name)
 
         if server.id in data:
-            if author.id in data[server.id]:
-                data = data[server.id][author.id]['GAMES']
+            if username.id in data[server.id]:
+                data = data[server.id][username.id]['GAMES']
 
                 games_played = sorted(data, key=lambda x: (data[x]['MINUTES']), reverse=True)
                 i = 0
@@ -91,7 +91,7 @@ class Played2:
                         finalMsg += msg
                         i += 1
                 finalMsg += ' ```'
-                self.save_last(server, author.id)
+                self.save_last(server, username.id)
                 await self.bot.say(finalMsg)
             else:
                 finalMsg = '``{} no servidor: {} ainda não está no banco de dados.``'.format(author.display_name, server.name)
