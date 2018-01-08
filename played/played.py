@@ -45,25 +45,7 @@ class Played:
 
         fileIO(self.data_file, 'save', data)
 
-    @played.command(pass_context=True, name='history')
-    async def _played_history(self, ctx):
-        """Shows weekly played times."""
-        server = ctx.message.server
-        data = fileIO(self.data_file, 'load')
-        prefix = '```Markdown\n'
-        msg = None
-        if server.id in data:
-            data = data[server.id]['HISTORY']
-            times = sorted(data, key=lambda x: (data[x]['TIME']), reverse=True)
-            for time in times:
-                minutes = time % 60
-                hours = int(time / 60)
-                msg += prefix + 'Na semana {} foram jogados {}h:{}m\n'.format(epoch_converter(time['EPOCH']), str(hours), str(minutes))
-
-            msg += ' ```'
-            await self.bot.say(msg)
-
-    @played.command(pass_context=True, no_pm=True, name='played')
+    @commands.command(pass_context=True, no_pm=True, name='played')
     async def _played(self, context):
         """Shows playtime per game."""
         server = context.message.server
@@ -127,6 +109,24 @@ class Played:
             finalMsg += ' ```'
             self.save_last(server)
             await self.bot.say(finalMsg)
+
+    @commands.command(pass_context=True, no_pm=True, name='history')
+    def _history(self, ctx):
+        """Shows weekly played times."""
+        server = ctx.message.server
+        data = fileIO(self.data_file, 'load')
+        prefix = '```Markdown\n'
+        msg = None
+        if server.id in data:
+            data = data[server.id]['HISTORY']
+            times = sorted(data, key=lambda x: (data[x]['TIME']), reverse=True)
+            for time in times:
+                minutes = time % 60
+                hours = int(time / 60)
+                msg += prefix + 'Na semana {} foram jogados {}h:{}m\n'.format(epoch_converter(time['EPOCH']), str(hours), str(minutes))
+
+            msg += ' ```'
+            await self.bot.say(msg)
 
     def save_last(self, server):
         data = fileIO(self.data_file, 'load')
