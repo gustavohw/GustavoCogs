@@ -120,11 +120,11 @@ class Played:
             data = data[server.id]['HISTORY']
             epochs = sorted(data, key=lambda x: (data[x]['EPOCH']), reverse=True)
             for epoch in epochs:
-                #t = epoch['TIME']
-                #minutes = t % 60
-                #hours = int(t / 60)
-                msg += str(epoch['TIME'])
-                #msg += prefix + 'Na semana {} foram jogados {}h:{}m\n'.format(str(epoch_converter(epoch['EPOCH'])), str(hours), str(minutes))
+                t = data[epoch]
+                minutes = t % 60
+                hours = int(t / 60)
+                msg += str(minutes)
+                msg += prefix + 'Na semana {} foram jogados {}h:{}m\n'.format(str(epoch_converter(data[epoch]['EPOCH'])), str(hours), str(minutes))
 
             msg += ' ```'
             await self.bot.say(msg)
