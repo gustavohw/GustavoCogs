@@ -57,7 +57,7 @@ class Played2:
         server = context.message.server
         data = fileIO(self.data_file, 'load')
         author = username
-        finalMsg = '```Jogos mais jogados por {} no servidor: {}\n\n'.format(author.display_name, server.name)
+        finalMsg = '```Jogos mais jogados por {} no servidor: {}\n\n'.format(author.name, server.name)
 
         if server.id in data:
             if author.id in data[server.id]:
