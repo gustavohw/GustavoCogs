@@ -56,6 +56,7 @@ class Played2:
         server = context.message.server
         data = fileIO(self.data_file, 'load')
         mes = str(context.message.content)[1:]
+        await self.bot.say(str(mes))
         if mes == "played all":
             limit = 30
             finalMsg = '```30 Jogos mais jogados no servidor: {}\n\n'.format(server.name)
@@ -63,10 +64,10 @@ class Played2:
             limit = 10
             finalMsg = '```10 Jogos mais jogados no servidor: {}\n\n'.format(server.name)
 
-        if server.id in data:
-            data = data[server.id]
-            games_sorted = sort_games(data)
-            await self.bot.say(str(games_sorted))
+        # if server.id in data:
+        #     data = data[server.id]
+        #     games_sorted = sort_games(data)
+        #     await self.bot.say(str(games_sorted))
 
             # games_played = sorted(games_sorted, key=lambda x: (games_sorted[x]['MINUTES']), reverse=True)
             # i = 0
