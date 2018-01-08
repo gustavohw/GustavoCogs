@@ -113,7 +113,7 @@ class Played:
     # async def _history(self, ctx):
 
     @_played.command(pass_context=True, no_pm=True, name='history')
-    async def _history(self, ctx):
+    async def _played_history(self, ctx):
         """Shows weekly played times."""
         server = ctx.message.server
         data = fileIO(self.data_file, 'load')
