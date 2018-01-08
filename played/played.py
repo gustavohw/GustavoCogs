@@ -2,6 +2,9 @@ import os
 from discord.ext import commands
 from .utils.dataIO import fileIO
 from difflib import SequenceMatcher
+import discord
+from .utils import checks
+from __main__ import send_cmd_help
 import time
 
 
