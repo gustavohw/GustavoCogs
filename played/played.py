@@ -120,8 +120,9 @@ class Played:
             data = data[server.id]['HISTORY']
             times = sorted(data, key=lambda x: (data[x]['TIME']), reverse=True)
             for time in times:
-                minutes = time % 60
-                hours = int(time / 60)
+                t = int(time)
+                minutes = t % 60
+                hours = int(t / 60)
                 msg += prefix + 'Na semana {} foram jogados {}h:{}m\n'.format(epoch_converter(time['EPOCH']), str(hours), str(minutes))
 
             msg += ' ```'
