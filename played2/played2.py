@@ -1,5 +1,6 @@
 import os
 import json
+import discord
 from discord.ext import commands
 from .utils.dataIO import fileIO
 from difflib import SequenceMatcher
@@ -51,12 +52,12 @@ class Played2:
         fileIO(self.data_file, 'save', data)
 
     @commands.command(pass_context=True, no_pm=True, name='played2')
-    async def _played2(self, context):
+    async def _played2(self, context, username: discord.Member):
         """Shows playtime per game."""
         server = context.message.server
         data = fileIO(self.data_file, 'load')
-        mes = str(context.message.content)[1:]
-        await self.bot.say(str(mes))
+        author = username
+        await self.bot.say(str(author.id))
         if mes == "played all":
             limit = 30
             finalMsg = '```30 Jogos mais jogados no servidor: {}\n\n'.format(server.name)
