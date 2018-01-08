@@ -120,7 +120,7 @@ class Played:
             data = data[server.id]['HISTORY']
             epochs = sorted(data, key=lambda x: (data[x]['EPOCH']), reverse=True)
             for epoch in epochs:
-                t = data[epoch]
+                t = data[epoch]['TIME']
                 minutes = t % 60
                 hours = int(t / 60)
                 msg += str(minutes)
