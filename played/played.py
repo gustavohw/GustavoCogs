@@ -118,13 +118,13 @@ class Played:
         msg = prefix
         if server.id in data:
             data = data[server.id]['HISTORY']
-            times = sorted(data, key=lambda x: (data[x]['TIME']), reverse=True)
-            for time in times:
-                t = int(time)
+            epochs = sorted(data, key=lambda x: (data[x]['EPOCH']), reverse=True)
+            for epoch in epochs:
+                t = epoch['TIME']
                 minutes = t % 60
                 hours = int(t / 60)
-                msg += str(minutes)
-                #msg += prefix + 'Na semana {} foram jogados {}h:{}m\n'.format(str(epoch_converter(time['EPOCH'])), str(hours), str(minutes))
+                #msg += str(minutes)
+                msg += prefix + 'Na semana {} foram jogados {}h:{}m\n'.format(str(epoch_converter(epoch['EPOCH'])), str(hours), str(minutes))
 
             msg += ' ```'
             await self.bot.say(msg)
