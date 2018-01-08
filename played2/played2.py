@@ -95,6 +95,7 @@ class Played2:
                 await self.bot.say(finalMsg)
             else:
                 finalMsg = '``{} no servidor: {} ainda não está no banco de dados.``'.format(author.display_name, server.name)
+                await self.bot.say(finalMsg)
 
     def save_last(self, server):
         data = fileIO(self.data_file, 'load')
