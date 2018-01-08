@@ -115,7 +115,7 @@ class Played:
         server = ctx.message.server
         data = fileIO(self.data_file, 'load')
         prefix = '```Markdown\n'
-        msg = prefix
+        msg = prefix + 'Histórico de semanas jogadas no servidor: {}\n\n'.format(server.name)
         if server.id in data:
             data = data[server.id]['HISTORY']
             epochs = sorted(data, key=lambda x: (data[x]['EPOCH']), reverse=True)
