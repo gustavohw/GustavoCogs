@@ -47,67 +47,68 @@ class Played:
     @commands.group(pass_context=True, no_pm=True, name='played')
     async def _played(self, context):
         """Shows playtime per game."""
-        server = context.message.server
-        data = fileIO(self.data_file, 'load')
-        saved_epoch = data['INFO']['EPOCH']
-        mes = str(context.message.content)[1:]
-        prefix = '```Markdown\n'
-        if mes == "played all":
-            limit = 30
-            finalMsg = prefix + '30 Jogos mais jogados no servidor: {} <{} → {}>\n\n'.format(server.name, epoch_converter(saved_epoch), epoch_converter_next_week(saved_epoch))
-        else:
-            limit = 10
-            finalMsg = prefix + '10 Jogos mais jogados no servidor: {} <{} → {}>\n\n'.format(server.name, epoch_converter(saved_epoch), epoch_converter_next_week(saved_epoch))
+        if context.invoked_subcommand is None:
+            server = context.message.server
+            data = fileIO(self.data_file, 'load')
+            saved_epoch = data['INFO']['EPOCH']
+            mes = str(context.message.content)[1:]
+            prefix = '```Markdown\n'
+            if mes == "played all":
+                limit = 30
+                finalMsg = prefix + '30 Jogos mais jogados no servidor: {} <{} → {}>\n\n'.format(server.name, epoch_converter(saved_epoch), epoch_converter_next_week(saved_epoch))
+            else:
+                limit = 10
+                finalMsg = prefix + '10 Jogos mais jogados no servidor: {} <{} → {}>\n\n'.format(server.name, epoch_converter(saved_epoch), epoch_converter_next_week(saved_epoch))
 
-        if server.id in data:
-            data = data[server.id]['GAMES']
+            if server.id in data:
+                data = data[server.id]['GAMES']
 
-            games_played = sorted(data, key=lambda x: (data[x]['MINUTES']), reverse=True)
-            i = 1
-            for game in games_played:
-                if i < limit+1:
-                    gamestr = str(game)
-                    index = str(i) + '.'
-                    time = data[game]['MINUTES']
-                    timeLast = data[game]['LASTPLAY']
-                    if time > 60:
-                        hours = int(time/60)
-                        minutes = time % 60
+                games_played = sorted(data, key=lambda x: (data[x]['MINUTES']), reverse=True)
+                i = 1
+                for game in games_played:
+                    if i < limit+1:
+                        gamestr = str(game)
+                        index = str(i) + '.'
+                        time = data[game]['MINUTES']
+                        timeLast = data[game]['LASTPLAY']
+                        if time > 60:
+                            hours = int(time/60)
+                            minutes = time % 60
 
-                        hoursLast = int(timeLast / 60)
-                        minutesLast = timeLast % 60
+                            hoursLast = int(timeLast / 60)
+                            minutesLast = timeLast % 60
 
-                        final_sum_hours = hours - hoursLast
-                        final_sum_minutes = ((time - timeLast) % 60)
+                            final_sum_hours = hours - hoursLast
+                            final_sum_minutes = ((time - timeLast) % 60)
 
-                        msg = '{:<5}{}: {} horas e {} minutos.'.format(index, gamestr, str(hours), str(minutes))
+                            msg = '{:<5}{}: {} horas e {} minutos.'.format(index, gamestr, str(hours), str(minutes))
 
-                        diff = get_change(time, timeLast)
-                        if diff > 0.05:
-                            msg += ' <+{}h:{}m/+{}%>'.format(str(final_sum_hours), str(final_sum_minutes), str(format(get_change(time, timeLast), '.2f')))
-                    else:
-                        minutes = time
-                        minutesLast = timeLast
-                        final_sum_minutes = ((time - timeLast) % 60)
+                            diff = get_change(time, timeLast)
+                            if diff > 0.05:
+                                msg += ' <+{}h:{}m/+{}%>'.format(str(final_sum_hours), str(final_sum_minutes), str(format(get_change(time, timeLast), '.2f')))
+                        else:
+                            minutes = time
+                            minutesLast = timeLast
+                            final_sum_minutes = ((time - timeLast) % 60)
 
-                        msg = '{:<5}{}: {} minutos.'.format(index, gamestr, str(minutes))
+                            msg = '{:<5}{}: {} minutos.'.format(index, gamestr, str(minutes))
 
-                        diff = get_change(time, timeLast)
-                        if diff > 0.05:
-                            msg += ' <+{} minutos/+{}%>'.format(str(final_sum_minutes), str(format(get_change(time, timeLast), '.2f')))
+                            diff = get_change(time, timeLast)
+                            if diff > 0.05:
+                                msg += ' <+{} minutos/+{}%>'.format(str(final_sum_minutes), str(format(get_change(time, timeLast), '.2f')))
 
-                    msg += '\n'
-                    finalMsg += msg
-                    i += 1
+                        msg += '\n'
+                        finalMsg += msg
+                        i += 1
 
-            minutes_played = self.get_weekly_time(server)
-            weekly_hours = int(minutes_played / 60)
-            weekly_minutes = minutes_played % 60
+                minutes_played = self.get_weekly_time(server)
+                weekly_hours = int(minutes_played / 60)
+                weekly_minutes = minutes_played % 60
 
-            finalMsg += '\nForam jogados totais de <{}h:{}m> nessa semana!'.format(str(weekly_hours), str(weekly_minutes))
-            finalMsg += ' ```'
-            self.save_last(server)
-            await self.bot.say(finalMsg)
+                finalMsg += '\nForam jogados totais de <{}h:{}m> nessa semana!'.format(str(weekly_hours), str(weekly_minutes))
+                finalMsg += ' ```'
+                self.save_last(server)
+                await self.bot.say(finalMsg)
 
     # @commands.command(pass_context=True, no_pm=True, name='history')
     # async def _history(self, ctx):
