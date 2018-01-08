@@ -115,7 +115,7 @@ class Played:
         server = ctx.message.server
         data = fileIO(self.data_file, 'load')
         prefix = '```Markdown\n'
-        msg = None
+        msg = prefix
         if server.id in data:
             data = data[server.id]['HISTORY']
             times = sorted(data, key=lambda x: (data[x]['TIME']), reverse=True)
