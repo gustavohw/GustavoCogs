@@ -44,7 +44,7 @@ class Played:
 
         fileIO(self.data_file, 'save', data)
 
-    @commands.command(pass_context=True, no_pm=True, name='played')
+    @commands.group(pass_context=True, no_pm=True, name='played')
     async def _played(self, context):
         """Shows playtime per game."""
         server = context.message.server
@@ -109,7 +109,10 @@ class Played:
             self.save_last(server)
             await self.bot.say(finalMsg)
 
-    @commands.command(pass_context=True, no_pm=True, name='history')
+    # @commands.command(pass_context=True, no_pm=True, name='history')
+    # async def _history(self, ctx):
+
+    @_played.command(pass_context=True, no_pm=True, name='history')
     async def _history(self, ctx):
         """Shows weekly played times."""
         server = ctx.message.server
