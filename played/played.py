@@ -136,6 +136,11 @@ class Played:
             msg += ' ```'
             await self.bot.say(msg)
 
+    @_played.command(pass_context=True, no_pm=True, name='help')
+    async def _played_help(self, ctx):
+        await send_cmd_help(ctx)
+        return
+
     def save_last(self, server):
         data = fileIO(self.data_file, 'load')
         saved_epoch = data['INFO']['EPOCH']
