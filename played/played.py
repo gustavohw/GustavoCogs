@@ -144,6 +144,7 @@ class Played:
     async def _played_save(self, ctx):
         server = ctx.message.server
         self.save_last(server)
+        await self.bot.say('Last Play saved.')
 
     def save_last(self, server):
         data = fileIO(self.data_file, 'load')
