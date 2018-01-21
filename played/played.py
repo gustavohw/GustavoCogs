@@ -106,7 +106,7 @@ class Played:
 
                 finalMsg += '\nForam jogados totais de <{}h:{}m> nessa semana!'.format(str(weekly_hours), str(weekly_minutes))
                 finalMsg += ' ```'
-                #self.save_last(server)
+                self.save_last(server)
                 await self.bot.say(finalMsg)
 
     # @commands.command(pass_context=True, no_pm=True, name='history')
@@ -141,7 +141,11 @@ class Played:
         return
 
     @_played.command(pass_context=True, no_pm=True, name='save')
-    def _played_save(self, server):
+    async def _played_save(self, ctx):
+        server = ctx.message.server
+        self.save_last(server)
+
+    def save_last(self, server):
         data = fileIO(self.data_file, 'load')
         saved_epoch = data['INFO']['EPOCH']
         weekly_total = None
