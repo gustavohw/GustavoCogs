@@ -150,17 +150,17 @@ class Played:
         data = fileIO(self.data_file, 'load')
         saved_epoch = data['INFO']['EPOCH']
         weekly_total = None
-        if check_weekly(saved_epoch):
-            if server.id in data:
-                for game in data[server.id]['GAMES']:
-                    data[server.id]['GAMES'][game]['LASTPLAY'] = data[server.id]['GAMES'][game]['MINUTES']
-                    weekly_total += (data[server.id]['GAMES'][game]['MINUTES'] - data[server.id]['GAMES'][game]['LASTPLAY'])
+        #if check_weekly(saved_epoch):
+        if server.id in data:
+            for game in data[server.id]['GAMES']:
+                data[server.id]['GAMES'][game]['LASTPLAY'] = data[server.id]['GAMES'][game]['MINUTES']
+                weekly_total += (data[server.id]['GAMES'][game]['MINUTES'] - data[server.id]['GAMES'][game]['LASTPLAY'])
 
-                data[server.id]['HISTORY'][str(saved_epoch)] = {}
-                data[server.id]['HISTORY'][str(saved_epoch)]['EPOCH'] = saved_epoch
-                data[server.id]['HISTORY'][str(saved_epoch)]['TIME'] = weekly_total
+            data[server.id]['HISTORY'][str(saved_epoch)] = {}
+            data[server.id]['HISTORY'][str(saved_epoch)]['EPOCH'] = saved_epoch
+            data[server.id]['HISTORY'][str(saved_epoch)]['TIME'] = weekly_total
 
-            fileIO(self.data_file, 'save', data)
+        fileIO(self.data_file, 'save', data)
 
     def get_weekly_time(self, server):
         data = fileIO(self.data_file, 'load')
