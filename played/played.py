@@ -143,8 +143,8 @@ class Played:
     @_played.command(pass_context=True, no_pm=True, name='save')
     async def _played_save(self, ctx):
         server = ctx.message.server
-        self.save_last(server)
-        await self.bot.say('Last Play saved.')
+        epoch = self.save_last(server)
+        await self.bot.say(epoch)
 
     def save_last(self, server):
         data = fileIO(self.data_file, 'load')
@@ -161,7 +161,7 @@ class Played:
             data[server.id]['HISTORY'][str(saved_epoch)]['TIME'] = weekly_total
 
         fileIO(self.data_file, 'save', data)
-        save_weekly_epoch()
+        return save_weekly_epoch(True)
 
     def get_weekly_time(self, server):
         data = fileIO(self.data_file, 'load')
@@ -199,12 +199,15 @@ def check_weekly(epoch):
     else:
         return False
 
-def save_weekly_epoch():
+def save_weekly_epoch(bypass):
     data_file = 'data/played/played.json'
     data = fileIO(data_file, 'load')
     epoch = data['INFO']['EPOCH']
-    if check_weekly(epoch) is True:
+    if check_weekly(epoch) is True or bypass is True:
         data['INFO']['EPOCH'] = int(time.time())
+        fileIO(data_file, 'save', data)
+
+        return str(data['INFO']['EPOCH'])
 
 def check_folder():
     if not os.path.exists('data/played'):
