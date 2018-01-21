@@ -106,7 +106,7 @@ class Played:
 
                 finalMsg += '\nForam jogados totais de <{}h:{}m> nessa semana!'.format(str(weekly_hours), str(weekly_minutes))
                 finalMsg += ' ```'
-                self.save_last(server)
+                #self.save_last(server)
                 await self.bot.say(finalMsg)
 
     # @commands.command(pass_context=True, no_pm=True, name='history')
@@ -140,28 +140,22 @@ class Played:
         await send_cmd_help(ctx)
         return
 
-    @_played.command(pass_context=True, no_pm=True, name='save')
-    async def _played_save(self, ctx):
-        server = ctx.message.server
-        epoch = self.save_last(server)
-        await self.bot.say(epoch)
-
     def save_last(self, server):
         data = fileIO(self.data_file, 'load')
         saved_epoch = data['INFO']['EPOCH']
         weekly_total = 0
-        #if check_weekly(saved_epoch):
-        if server.id in data:
-            for game in data[server.id]['GAMES']:
-                data[server.id]['GAMES'][game]['LASTPLAY'] = data[server.id]['GAMES'][game]['MINUTES']
-                weekly_total += (data[server.id]['GAMES'][game]['MINUTES'] - data[server.id]['GAMES'][game]['LASTPLAY'])
+        if check_weekly(saved_epoch):
+            if server.id in data:
+                for game in data[server.id]['GAMES']:
+                    weekly_total += (data[server.id]['GAMES'][game]['MINUTES'] - data[server.id]['GAMES'][game]['LASTPLAY'])
+                    data[server.id]['GAMES'][game]['LASTPLAY'] = data[server.id]['GAMES'][game]['MINUTES']
 
-            data[server.id]['HISTORY'][str(saved_epoch)] = {}
-            data[server.id]['HISTORY'][str(saved_epoch)]['EPOCH'] = saved_epoch
-            data[server.id]['HISTORY'][str(saved_epoch)]['TIME'] = weekly_total
+                data[server.id]['HISTORY'][str(saved_epoch)] = {}
+                data[server.id]['HISTORY'][str(saved_epoch)]['EPOCH'] = saved_epoch
+                data[server.id]['HISTORY'][str(saved_epoch)]['TIME'] = weekly_total
 
-        fileIO(self.data_file, 'save', data)
-        return save_weekly_epoch(True)
+            fileIO(self.data_file, 'save', data)
+            save_weekly_epoch()
 
     def get_weekly_time(self, server):
         data = fileIO(self.data_file, 'load')
@@ -199,15 +193,13 @@ def check_weekly(epoch):
     else:
         return False
 
-def save_weekly_epoch(bypass):
+def save_weekly_epoch():
     data_file = 'data/played/played.json'
     data = fileIO(data_file, 'load')
     epoch = data['INFO']['EPOCH']
-    if check_weekly(epoch) is True or bypass is True:
+    if check_weekly(epoch) is True:
         data['INFO']['EPOCH'] = int(time.time())
         fileIO(data_file, 'save', data)
-
-        return str(data['INFO']['EPOCH'])
 
 def check_folder():
     if not os.path.exists('data/played'):
