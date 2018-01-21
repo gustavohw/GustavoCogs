@@ -149,7 +149,7 @@ class Played:
     def save_last(self, server):
         data = fileIO(self.data_file, 'load')
         saved_epoch = data['INFO']['EPOCH']
-        weekly_total = None
+        weekly_total = 0
         #if check_weekly(saved_epoch):
         if server.id in data:
             for game in data[server.id]['GAMES']:
