@@ -2,9 +2,6 @@ import os
 from discord.ext import commands
 from .utils.dataIO import fileIO
 from difflib import SequenceMatcher
-import discord
-from .utils import checks
-from __main__ import send_cmd_help
 import time
 
 
@@ -16,7 +13,6 @@ class Played:
     def match(self, a, b):
         return SequenceMatcher(None, a, b).ratio()
 
-    # TODO: Adicionar hook pra pegar @menção e fazer mais uma key em baixo do Game pra conter Nome : Tempo
     @commands.command(pass_context=True, no_pm=True, name='getPlayTime')
     async def _getPlayTime(self, context):
         """Schedule this per 1 minute basis."""
@@ -110,7 +106,7 @@ class Played:
 
                 finalMsg += '\nForam jogados totais de <{}h:{}m> nessa semana!'.format(str(weekly_hours), str(weekly_minutes))
                 finalMsg += ' ```'
-                self.save_last(server)
+                #self.save_last(server)
                 await self.bot.say(finalMsg)
 
     # @commands.command(pass_context=True, no_pm=True, name='history')
@@ -144,7 +140,8 @@ class Played:
         await send_cmd_help(ctx)
         return
 
-    def save_last(self, server):
+    @_played.command(pass_context=True, no_pm=True, name='save')
+    def _played_save(self, server):
         data = fileIO(self.data_file, 'load')
         saved_epoch = data['INFO']['EPOCH']
         weekly_total = None
