@@ -41,7 +41,7 @@ class Played:
                     else:
                         data[server.id]['GAMES'][after_game]['MINUTES'] += 1
 
-                self.save_last(server.id)
+                #self.save_last(server.id)
 
         fileIO(self.data_file, 'save', data)
 
