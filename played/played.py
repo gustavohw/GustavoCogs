@@ -41,7 +41,7 @@ class Played:
                     else:
                         data[server.id]['GAMES'][after_game]['MINUTES'] += 1
 
-        # self.save_last()
+        # self.save_last(server)
         fileIO(self.data_file, 'save', data)
 
     @commands.group(pass_context=True, no_pm=True, name='played')
@@ -140,22 +140,21 @@ class Played:
         await send_cmd_help(ctx)
         return
 
-    def save_last(self):
+    def save_last(self, server):
         data = fileIO(self.data_file, 'load')
         saved_epoch = data['INFO']['EPOCH']
         weekly_total = 0
         if check_weekly(saved_epoch):
-            for srv in data:
-                for game in data[srv]['GAMES']:
-                    weekly_total += (data[srv]['GAMES'][game]['MINUTES'] - data[srv]['GAMES'][game]['LASTPLAY'])
-                    data[srv]['GAMES'][game]['LASTPLAY'] = data[srv]['GAMES'][game]['MINUTES']
+            for game in data[server.id]['GAMES']:
+                weekly_total += (data[server.id]['GAMES'][game]['MINUTES'] - data[server.id]['GAMES'][game]['LASTPLAY'])
+                data[server.id]['GAMES'][game]['LASTPLAY'] = data[server.id]['GAMES'][game]['MINUTES']
 
-                data[srv]['HISTORY'][str(saved_epoch)] = {}
-                data[srv]['HISTORY'][str(saved_epoch)]['EPOCH'] = saved_epoch
-                data[srv]['HISTORY'][str(saved_epoch)]['TIME'] = weekly_total
+            data[server.id]['HISTORY'][str(saved_epoch)] = {}
+            data[server.id]['HISTORY'][str(saved_epoch)]['EPOCH'] = saved_epoch
+            data[server.id]['HISTORY'][str(saved_epoch)]['TIME'] = weekly_total
 
-            fileIO(self.data_file, 'save', data)
-            save_weekly_epoch()
+        fileIO(self.data_file, 'save', data)
+        save_weekly_epoch()
 
     def get_weekly_time(self, server):
         data = fileIO(self.data_file, 'load')
