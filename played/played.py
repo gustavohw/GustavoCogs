@@ -41,6 +41,8 @@ class Played:
                     else:
                         data[server.id]['GAMES'][after_game]['MINUTES'] += 1
 
+                self.save_last(server.id)
+
         fileIO(self.data_file, 'save', data)
 
     @commands.group(pass_context=True, no_pm=True, name='played')
@@ -196,10 +198,8 @@ def check_weekly(epoch):
 def save_weekly_epoch():
     data_file = 'data/played/played.json'
     data = fileIO(data_file, 'load')
-    epoch = data['INFO']['EPOCH']
-    if check_weekly(epoch) is True:
-        data['INFO']['EPOCH'] = int(time.time())
-        fileIO(data_file, 'save', data)
+    data['INFO']['EPOCH'] = int(time.time())
+    fileIO(data_file, 'save', data)
 
 def check_folder():
     if not os.path.exists('data/played'):
