@@ -178,7 +178,9 @@ class Played:
         saved_epoch = data['INFO']['EPOCH']
         await self.bot.say(saved_epoch)
         for key in data:
-            await self.bot.say('Key:' + key)
+            await self.bot.say('Server:' + key)
+            for game in data[key]:
+                await self.bot.say('Game:' + game)
 
         # if check_weekly(saved_epoch):
         #     await self.bot.say('One week has passed, saving...')
