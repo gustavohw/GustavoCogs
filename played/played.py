@@ -171,11 +171,11 @@ class Played:
             return total_played_minutes
 
     @_played.command(pass_context=True, no_pm=True, name='save')
-    async def _played_save(self, context):
+    async def _played_debug_save(self, context):
         self.save_last(context.message.server)
-        data = fileIO(self.data_file, 'load')
-        saved_epoch = data['INFO']['EPOCH']
-        await self.bot.say('Saved Epoch: ' + str(saved_epoch) + ' current epoch: ' + str(int(time.time())))
+        # data = fileIO(self.data_file, 'load')
+        # saved_epoch = data['INFO']['EPOCH']
+        # await self.bot.say('Saved Epoch: ' + str(saved_epoch) + ' current epoch: ' + str(int(time.time())))
         # if check_weekly(saved_epoch):
         #     await self.bot.say('One week has passed, saving...')
 
