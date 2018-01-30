@@ -176,8 +176,12 @@ class Played:
         self.save_last()
         data = fileIO(self.data_file, 'load')
         saved_epoch = data['INFO']['EPOCH']
-        if check_weekly(saved_epoch):
-            await self.bot.say('One week has passed, saving...')
+
+        for key, value in data:
+            await self.bot.say('Key:' + key + ' value: ' + value)
+
+        # if check_weekly(saved_epoch):
+        #     await self.bot.say('One week has passed, saving...')
 
 
 def get_change(current, previous):
