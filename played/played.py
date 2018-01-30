@@ -41,7 +41,7 @@ class Played:
                     else:
                         data[server.id]['GAMES'][after_game]['MINUTES'] += 1
 
-                #self.save_last(server.id)
+                self.save_last(server)
 
         fileIO(self.data_file, 'save', data)
 
@@ -190,7 +190,7 @@ def epoch_converter_next_week(epoch):
 
 def check_weekly(epoch):
     epoch_week = 604800
-    if int(time.time()) > (epoch + epoch_week):
+    if int(time.time()) > int(epoch + epoch_week):
         return True
     else:
         return False
