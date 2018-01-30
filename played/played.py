@@ -204,8 +204,9 @@ def check_weekly(epoch):
 def save_weekly_epoch():
     data_file = 'data/played/played.json'
     data = fileIO(data_file, 'load')
-    data['INFO']['EPOCH'] = int(time.time())
-    fileIO(data_file, 'save', data)
+    if check_weekly(data['INFO']['EPOCH']) is True:
+        data['INFO']['EPOCH'] = int(time.time())
+        fileIO(data_file, 'save', data)
 
 def check_folder():
     if not os.path.exists('data/played'):
