@@ -107,7 +107,6 @@ class Played:
 
                 finalMsg += '\nForam jogados totais de <{}h:{}m> nessa semana!'.format(str(weekly_hours), str(weekly_minutes))
                 finalMsg += ' ```'
-                #self.save_last(server)
                 await self.bot.say(finalMsg)
 
     # @commands.command(pass_context=True, no_pm=True, name='history')
@@ -188,11 +187,12 @@ def epoch_converter_next_week(epoch):
     return time.strftime('%d-%m-%Y', time.localtime(epoch+604800))
 
 def check_weekly(epoch):
-    epoch_week = 604800
-    if int(time.time()) > int(epoch + epoch_week):
-        return True
-    else:
-        return False
+    return True
+    # epoch_week = 604800
+    # if int(time.time()) > int(epoch + epoch_week):
+    #     return True
+    # else:
+    #     return False
 
 def save_weekly_epoch():
     data_file = 'data/played/played.json'
