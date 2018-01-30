@@ -173,7 +173,7 @@ class Played:
 
     @_played.command(pass_context=True, no_pm=True, name='save')
     async def _played_save(self, context):
-        self.save_last()
+        # self.save_last()
         data = fileIO(self.data_file, 'load')
         saved_epoch = data['INFO']['EPOCH']
 
