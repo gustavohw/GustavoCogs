@@ -153,8 +153,8 @@ class Played:
             data[server.id]['HISTORY'][str(saved_epoch)]['EPOCH'] = saved_epoch
             data[server.id]['HISTORY'][str(saved_epoch)]['TIME'] = weekly_total
 
-        fileIO(self.data_file, 'save', data)
-        save_weekly_epoch()
+            fileIO(self.data_file, 'save', data)
+            save_weekly_epoch()
 
     def get_weekly_time(self, server):
         data = fileIO(self.data_file, 'load')
