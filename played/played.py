@@ -176,7 +176,7 @@ class Played:
         # self.save_last()
         data = fileIO(self.data_file, 'load')
         saved_epoch = data['INFO']['EPOCH']
-        await self.bot.say(saved_epoch)
+        await self.bot.say('Saved Epoch: ' + saved_epoch + ' current epoch: ' + int(time.time()))
         for key in data:
             await self.bot.say('Server:' + key)
             for game in data[key]:
