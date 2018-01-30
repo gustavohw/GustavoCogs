@@ -41,7 +41,7 @@ class Played:
                     else:
                         data[server.id]['GAMES'][after_game]['MINUTES'] += 1
 
-        # self.save_last(server)
+        self.save_last(server)
         fileIO(self.data_file, 'save', data)
 
     @commands.group(pass_context=True, no_pm=True, name='played')
@@ -171,13 +171,9 @@ class Played:
             return total_played_minutes
 
     @_played.command(pass_context=True, no_pm=True, name='save')
+    @checks.admin_or_permissions(administrator=True)
     async def _played_save(self, context):
         self.save_last(context.message.server)
-        # data = fileIO(self.data_file, 'load')
-        # saved_epoch = data['INFO']['EPOCH']
-        # await self.bot.say('Saved Epoch: ' + str(saved_epoch) + ' current epoch: ' + str(int(time.time())))
-        # if check_weekly(saved_epoch):
-        #     await self.bot.say('One week has passed, saving...')
 
 
 def get_change(current, previous):
