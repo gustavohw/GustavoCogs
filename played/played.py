@@ -179,7 +179,7 @@ class Played:
         await self.bot.say('Saved Epoch: ' + str(saved_epoch) + ' current epoch: ' + str(int(time.time())))
         for key in data:
             await self.bot.say('Server:' + key)
-            for game in data[key]:
+            for game in data[key]['GAMES']:
                 await self.bot.say('Game:' + game)
 
         # if check_weekly(saved_epoch):
