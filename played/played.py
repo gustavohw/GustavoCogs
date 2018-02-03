@@ -171,7 +171,7 @@ class Played:
             return total_played_minutes
 
     @_played.command(pass_context=True, no_pm=True, name='save')
-    @checks.admin_or_permissions(administrator=True)
+    # @checks.admin_or_permissions(administrator=True)
     async def _played_save(self, context):
         self.save_last(context.message.server)
 
