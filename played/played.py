@@ -138,22 +138,21 @@ class Played:
         await send_cmd_help(ctx)
         return
 
-    def save_last(self):
+    def save_last(self, server_id):
         data = fileIO(self.data_file, 'load')
         saved_epoch = data['INFO']['EPOCH']
         weekly_total = 0
         if check_weekly(saved_epoch):
-            for srv in data:
-                for game in srv['GAMES']:
-                    weekly_total += (data[srv]['GAMES'][game]['MINUTES'] - data[srv]['GAMES'][game]['LASTPLAY'])
-                    data[srv]['GAMES'][game]['LASTPLAY'] = data[srv]['GAMES'][game]['MINUTES']
+            for game in data[server_id]['GAMES']:
+                weekly_total += (data[server_id]['GAMES'][game]['MINUTES'] - data[server_id]['GAMES'][game]['LASTPLAY'])
+                data[server_id]['GAMES'][game]['LASTPLAY'] = data[server_id]['GAMES'][game]['MINUTES']
 
-                data[srv]['HISTORY'][str(saved_epoch)] = {}
-                data[srv]['HISTORY'][str(saved_epoch)]['EPOCH'] = saved_epoch
-                data[srv]['HISTORY'][str(saved_epoch)]['TIME'] = weekly_total
+            data[server_id]['HISTORY'][str(saved_epoch)] = {}
+            data[server_id]['HISTORY'][str(saved_epoch)]['EPOCH'] = saved_epoch
+            data[server_id]['HISTORY'][str(saved_epoch)]['TIME'] = weekly_total
 
-            fileIO(self.data_file, 'save', data)
-            save_weekly_epoch()
+        fileIO(self.data_file, 'save', data)
+        save_weekly_epoch()
 
     def get_weekly_time(self, server):
         data = fileIO(self.data_file, 'load')
@@ -171,8 +170,8 @@ class Played:
 
     @_played.command(pass_context=True, no_pm=True, name='save')
     # @checks.admin_or_permissions(administrator=True)
-    async def _played_save(self):
-        self.save_last()
+    async def _played_save(self, context):
+        self.save_last(str(context.message.content)[1:])
 
     @_played.command(pass_context=True, no_pm=True, name='backup')
     async def _played_backup(self):
