@@ -3,6 +3,7 @@ from discord.ext import commands
 from .utils.dataIO import fileIO
 from difflib import SequenceMatcher
 import time
+import shutil
 
 
 class Played:
@@ -173,7 +174,11 @@ class Played:
     async def _played_save(self):
         self.save_last()
 
-
+    @_played.command(pass_context=True, no_pm=True, name='save')
+    async def _played_backup(self):
+        new_filename = self.data_file
+        new_filename += str(epoch_converter(time.time()))
+        shutil.copy2(self.data_file, new_filename)
 
 def get_change(current, previous):
     if current == previous:
