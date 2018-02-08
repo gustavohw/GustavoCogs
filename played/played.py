@@ -179,6 +179,14 @@ class Played:
         new_filename += str(epoch_converter(time.time()))
         shutil.copy2(self.data_file, new_filename)
 
+    @_played.command(pass_context=True, no_pm=True, name='printservers')
+    async def _played_debug_printservers(self, context):
+        data = fileIO(self.data_file, 'load')
+        msg = ''
+        for server in data:
+            msg += 'Server: {} \n'.format(server)
+        await self.bot.say(msg)
+
 def get_change(current, previous):
     if current == previous:
         return 0
