@@ -187,7 +187,8 @@ class Played:
         data = fileIO(self.data_file, 'load')
         msg = ''
         for server in data:
-            msg += 'Server: {} \n'.format(server)
+            if server != 'INFO':
+                msg += 'Server: {} \n'.format(server)
         await self.bot.say(msg)
 
 def get_change(current, previous):
