@@ -174,7 +174,7 @@ class Played:
     async def _played_save(self):
         self.save_last()
 
-    @_played.command(pass_context=True, no_pm=True, name='save')
+    @_played.command(pass_context=True, no_pm=True, name='backup')
     async def _played_backup(self):
         new_filename = self.data_file
         new_filename += str(epoch_converter(time.time()))
