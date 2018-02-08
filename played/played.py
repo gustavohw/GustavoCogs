@@ -144,7 +144,7 @@ class Played:
         weekly_total = 0
         if check_weekly(saved_epoch):
             for srv in data:
-                for game in data[srv]['GAMES']:
+                for game in data[str(srv)]['GAMES']:
                     weekly_total += (data[srv]['GAMES'][game]['MINUTES'] - data[srv]['GAMES'][game]['LASTPLAY'])
                     data[srv]['GAMES'][game]['LASTPLAY'] = data[srv]['GAMES'][game]['MINUTES']
 
