@@ -171,7 +171,7 @@ class Played:
     @_played.command(pass_context=True, no_pm=True, name='save')
     # @checks.admin_or_permissions(administrator=True)
     async def _played_save(self, context):
-        self.save_last(str(context.message.content)[1:])
+        self.save_last(str(context.message.content)[12:])
 
     @_played.command(pass_context=True, no_pm=True, name='backup')
     async def _played_backup(self):
