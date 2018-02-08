@@ -179,8 +179,8 @@ class Played:
         new_filename += str(epoch_converter(time.time()))
         shutil.copy2(self.data_file, new_filename)
 
-    @_played.command(pass_context=True, no_pm=True, name='printservers')
-    async def _played_debug_printservers(self, context):
+    @_played.command(pass_context=True, no_pm=True, name='debug')
+    async def _played_debug(self, context):
         data = fileIO(self.data_file, 'load')
         msg = ''
         for server in data:
