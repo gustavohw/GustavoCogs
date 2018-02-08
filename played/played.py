@@ -41,7 +41,7 @@ class Played:
                     else:
                         data[server.id]['GAMES'][after_game]['MINUTES'] += 1
 
-        self.save_last(server)
+        self.save_last()
         fileIO(self.data_file, 'save', data)
 
     @commands.group(pass_context=True, no_pm=True, name='played')
@@ -109,9 +109,6 @@ class Played:
                 finalMsg += ' ```'
                 await self.bot.say(finalMsg)
 
-    # @commands.command(pass_context=True, no_pm=True, name='history')
-    # async def _history(self, ctx):
-
     @_played.command(pass_context=True, no_pm=True, name='history')
     async def _played_history(self, ctx):
         """Shows weekly played times."""
@@ -140,18 +137,19 @@ class Played:
         await send_cmd_help(ctx)
         return
 
-    def save_last(self, server):
+    def save_last(self):
         data = fileIO(self.data_file, 'load')
         saved_epoch = data['INFO']['EPOCH']
         weekly_total = 0
         if check_weekly(saved_epoch):
-            for game in data[server.id]['GAMES']:
-                weekly_total += (data[server.id]['GAMES'][game]['MINUTES'] - data[server.id]['GAMES'][game]['LASTPLAY'])
-                data[server.id]['GAMES'][game]['LASTPLAY'] = data[server.id]['GAMES'][game]['MINUTES']
+            for srv in data:
+                for game in data[srv]['GAMES']:
+                    weekly_total += (data[srv]['GAMES'][game]['MINUTES'] - data[srv]['GAMES'][game]['LASTPLAY'])
+                    data[srv]['GAMES'][game]['LASTPLAY'] = data[srv]['GAMES'][game]['MINUTES']
 
-            data[server.id]['HISTORY'][str(saved_epoch)] = {}
-            data[server.id]['HISTORY'][str(saved_epoch)]['EPOCH'] = saved_epoch
-            data[server.id]['HISTORY'][str(saved_epoch)]['TIME'] = weekly_total
+                data[srv]['HISTORY'][str(saved_epoch)] = {}
+                data[srv]['HISTORY'][str(saved_epoch)]['EPOCH'] = saved_epoch
+                data[srv]['HISTORY'][str(saved_epoch)]['TIME'] = weekly_total
 
             fileIO(self.data_file, 'save', data)
             save_weekly_epoch()
@@ -172,8 +170,9 @@ class Played:
 
     @_played.command(pass_context=True, no_pm=True, name='save')
     # @checks.admin_or_permissions(administrator=True)
-    async def _played_save(self, context):
-        self.save_last(context.message.server)
+    async def _played_save(self):
+        self.save_last()
+
 
 
 def get_change(current, previous):
