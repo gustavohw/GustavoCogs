@@ -17,6 +17,7 @@ class Played:
     @commands.command(pass_context=True, no_pm=True, name='getPlayTime')
     async def _getPlayTime(self, context):
         """Schedule this per 1 minute basis."""
+        self.save_last()
         server = context.message.server
         data = fileIO(self.data_file, 'load')
         for member in server.members:
@@ -42,7 +43,6 @@ class Played:
                     else:
                         data[server.id]['GAMES'][after_game]['MINUTES'] += 1
 
-        self.save_last()
         fileIO(self.data_file, 'save', data)
 
     @commands.group(pass_context=True, no_pm=True, name='played')
@@ -153,8 +153,8 @@ class Played:
                     data[srv]['HISTORY'][str(saved_epoch)]['EPOCH'] = saved_epoch
                     data[srv]['HISTORY'][str(saved_epoch)]['TIME'] = weekly_total
 
-        fileIO(self.data_file, 'save', data)
-        save_weekly_epoch()
+            fileIO(self.data_file, 'save', data)
+            save_weekly_epoch()
 
     def get_weekly_time(self, server):
         data = fileIO(self.data_file, 'load')
