@@ -193,7 +193,7 @@ class Played:
     @_played.command(pass_context=True, no_pm=True, name='time')
     async def _played_time(self, context):
         data = fileIO(self.data_file, 'load')
-        msg = '```Current time is {}[{}] \n'.format(epoch_converter(time.time()), time.time())
+        msg = '```Current time is {}[{}] \n'.format(epoch_converter(int(time.time())), int(time.time()))
         msg += 'Saved time is {}[{}] \n\n'.format(epoch_converter(data['INFO']['EPOCH']), data['INFO']['EPOCH'])
         msg += 'Has a week passed since saved epoch: {}```'.format(check_weekly(data['INFO']['EPOCH']))
 
