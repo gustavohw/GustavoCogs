@@ -191,6 +191,16 @@ class Played:
                 msg += 'Server: {} \n'.format(server)
         await self.bot.say(msg)
 
+    @_played.command(pass_context=True, no_pm=True, name='time')
+    async def _played_time(self, context):
+        data = fileIO(self.data_file, 'load')
+        mes = str(context.message.content)[1:]
+        msg = 'Input time is {}[{}] \n'.format(epoch_converter(mes), mes)
+        msg += 'Current time is {}[{}] \n\n'.format(epoch_converter(data['INFO']['EPOCH']), data['INFO']['EPOCH'])
+        msg += 'Has a week ben passed since saved epoch: {}'.format(check_weekly(data['INFO']['EPOCH']))
+
+        await self.bot.say(msg)
+
 def get_change(current, previous):
     if current == previous:
         return 0
