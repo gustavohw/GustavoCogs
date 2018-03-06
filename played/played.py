@@ -174,7 +174,7 @@ class Played:
     async def _played_save(self, context):
         server = context.message.server
         await self.bot.say('``Salvando tempo semanal.``')
-        self.save_last()
+        self.save_last(True)
 
     @_played.command(pass_context=True, no_pm=True, name='backup')
     async def _played_backup(self):
