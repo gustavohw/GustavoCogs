@@ -173,6 +173,8 @@ class Played:
     @_played.command(pass_context=True, no_pm=True, name='save')
     # @checks.admin_or_permissions(administrator=True)
     async def _played_save(self, context):
+        server = context.message.server
+        await self.bot.say('``Salvando tempo semanal.``')
         self.save_last()
 
     @_played.command(pass_context=True, no_pm=True, name='backup')
