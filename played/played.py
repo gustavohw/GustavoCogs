@@ -154,7 +154,10 @@ class Played:
                     data[srv]['HISTORY'][str(saved_epoch)]['TIME'] = weekly_total
 
             fileIO(self.data_file, 'save', data)
-            save_weekly_epoch()
+            if force_save is True:
+                save_weekly_epoch(True)
+            else:
+                save_weekly_epoch()
 
     def get_weekly_time(self, server):
         data = fileIO(self.data_file, 'load')
@@ -221,10 +224,10 @@ def check_weekly(epoch):
     else:
         return False
 
-def save_weekly_epoch():
+def save_weekly_epoch(force_save=False):
     data_file = 'data/played/played.json'
     data = fileIO(data_file, 'load')
-    if check_weekly(data['INFO']['EPOCH']) is True:
+    if check_weekly(data['INFO']['EPOCH']) is True or force_save is True:
         data['INFO']['EPOCH'] = int(time.time())
         fileIO(data_file, 'save', data)
 
