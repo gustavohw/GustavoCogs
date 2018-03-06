@@ -138,11 +138,11 @@ class Played:
         await send_cmd_help(ctx)
         return
 
-    def save_last(self):
+    def save_last(self, force_save=False):
         data = fileIO(self.data_file, 'load')
         saved_epoch = data['INFO']['EPOCH']
         weekly_total = 0
-        if check_weekly(saved_epoch):
+        if check_weekly(saved_epoch) or force_save is True:
             for srv in data:
                 if srv != 'INFO':
                     for game in data[srv]['GAMES']:
@@ -171,7 +171,6 @@ class Played:
             return total_played_minutes
 
     @_played.command(pass_context=True, no_pm=True, name='save')
-    # @checks.admin_or_permissions(administrator=True)
     async def _played_save(self, context):
         server = context.message.server
         await self.bot.say('``Salvando tempo semanal.``')
